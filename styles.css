@@ -11,10 +11,10 @@ body {
   justify-content: flex-start;
   padding: 1rem 2rem;
   background-color: #FEEEB3;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 10;
+  width: 100%;
+  z-index: 100;
 }
 
 .logo {
@@ -31,21 +31,24 @@ body {
   text-transform: lowercase;
 }
 
+.hero {
+  margin-top: 80px;
+}
+
 .hero-image {
   width: 100%;
   height: auto;
   display: block;
 }
 
-.page {
-  background-color: #FEEEB3;
+.content {
   padding: 6rem 2rem 2rem;
 }
 
 .page-text {
   font-size: 1rem;
   max-width: 600px;
-  margin: 2rem auto;
+  margin: 0 auto;
   text-align: center;
   line-height: 1.8;
 }
