@@ -11,6 +11,7 @@ body {
   padding: 1rem 2rem;
   background-color: #FEEEB3;
   border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -44,15 +45,4 @@ body {
   margin: 2rem auto;
   text-align: center;
   line-height: 1.8;
-}
-
-.back {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.back a {
-  text-decoration: none;
-  color: #111;
-  font-size: 0.95rem;
 }
