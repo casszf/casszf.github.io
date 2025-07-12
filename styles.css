@@ -3,66 +3,56 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #FEEEB3;
   color: #111;
+}
+
+.topbar {
   display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #FEEEB3;
+  border-bottom: 1px solid #ddd;
 }
 
-.sidebar {
-  width: 200px;
-  background: #FEEEB3;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
+.logo {
+  height: 32px;
+  width: 32px;
+  margin-right: 2rem;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar ul li {
-  margin-bottom: 1.5rem;
-}
-
-.sidebar ul li a {
+.nav a {
+  margin-right: 2rem;
   text-decoration: none;
   color: #111;
   font-size: 1rem;
   text-transform: lowercase;
-  transition: opacity 0.2s;
 }
 
-.sidebar ul li a:hover {
-  opacity: 0.6;
-}
-
-.content {
-  margin-left: 200px;
-  padding: 2rem;
-  flex: 1;
-}
-
-.hero img {
+.hero-image {
   width: 100%;
-  max-height: 70vh;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
-.info {
-  margin-top: 3rem;
+.page {
+  background-color: #FEEEB3;
+  padding: 4rem 2rem;
 }
 
-.info h1 {
-  font-weight: normal;
-  text-transform: lowercase;
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.about-text {
+  font-size: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.info p {
+.menu-content {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
   font-size: 1rem;
-  line-height: 1.6;
+}
+
+.visit-text {
+  font-size: 1.2rem;
+  text-align: center;
 }
