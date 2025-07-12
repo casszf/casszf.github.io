@@ -38,21 +38,21 @@ body {
   padding: 4rem 2rem;
 }
 
-.about-text {
-  font-size: 1.5rem;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.menu-content {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
+.page-text {
   font-size: 1rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  text-align: center;
+  line-height: 1.8;
 }
 
-.visit-text {
-  font-size: 1.2rem;
+.back {
   text-align: center;
+  margin-bottom: 2rem;
+}
+
+.back a {
+  text-decoration: none;
+  color: #111;
+  font-size: 0.95rem;
 }
