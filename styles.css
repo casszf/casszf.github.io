@@ -8,10 +8,13 @@ body {
 .topbar {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 1rem 2rem;
   background-color: #FEEEB3;
   border-bottom: 1px solid #ddd;
-  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .logo {
@@ -36,7 +39,7 @@ body {
 
 .page {
   background-color: #FEEEB3;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem 2rem;
 }
 
 .page-text {
