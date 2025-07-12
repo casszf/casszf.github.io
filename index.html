@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mon Bagel Shop</title>
+  <title>Mon Bagel</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="favicon.png" type="image/png" />
 </head>
 <body>
-  <header class="hero">
-    <div class="overlay"></div>
-    <div class="inner">
-      <h1>Bienvenue chez Mon Bagel</h1>
-      <p>Bagels faits maison à Paris</p>
-    </div>
-  </header>
-
-  <section class="info">
-    <h2>📍 Adresse</h2>
-    <p>123 Rue Exemple, Paris</p>
-    <h2>🕒 Horaires</h2>
-    <p>Du mardi au dimanche — 10h à 17h</p>
-    <h2>📞 Contact</h2>
-    <p><a href="mailto:contact@monbagel.fr">contact@monbagel.fr</a> · <a href="tel:+33123456789">01 23 45 67 89</a></p>
-    <h2>Suivez-nous</h2>
-    <p><a href="https://instagram.com/toncompte" target="_blank">Instagram</a></p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Mon Bagel</p>
-  </footer>
+  <nav class="sidebar">
+    <ul>
+      <li><a href="#about">about</a></li>
+      <li><a href="#types">sesame, poppy or plain?</a></li>
+      <li><a href="#menu">menu</a></li>
+    </ul>
+  </nav>
+  <main class="content">
+    <section class="hero">
+      <img src="images/hero.jpg" alt="Bagel Image" />
+    </section>
+    <section class="info" id="about">
+      <h1>About</h1>
+      <p>Hand-rolled, oven-baked bagels made fresh daily in the heart of the city.</p>
+    </section>
+    <section class="info" id="types">
+      <h1>Sesame, poppy or plain?</h1>
+      <p>Our classics are simple and timeless. Choose your favorite and taste the difference.</p>
+    </section>
+    <section class="info" id="menu">
+      <h1>Menu</h1>
+      <p>Check back soon — our full menu will be posted here.</p>
+    </section>
+  </main>
 </body>
 </html>

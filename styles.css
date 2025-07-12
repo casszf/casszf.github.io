@@ -1,34 +1,68 @@
-body, h1, h2, p, a { margin:0; padding:0; }
-body { font-family: Arial, sans-serif; line-height:1.5; color:#333; }
-a { color: #0077cc; text-decoration: none; }
-
-.hero {
-  position: relative;
-  height: 60vh;
-  background: url('images/hero.jpg') center/cover no-repeat;
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #FEEEB3;
+  color: #111;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
 }
 
-.hero .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
+.sidebar {
+  width: 200px;
+  background: #FEEEB3;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
 }
 
-.hero .inner {
-  position: relative;
-  text-align: center;
-  padding: 1rem;
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
-.hero p { font-size: 1.25rem; }
+.sidebar ul li {
+  margin-bottom: 1.5rem;
+}
 
-.info { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
-.info h2 { margin-top: 1.5rem; font-size: 1.5rem; }
-.info p { margin-top: 0.5rem; }
+.sidebar ul li a {
+  text-decoration: none;
+  color: #111;
+  font-size: 1rem;
+  text-transform: lowercase;
+  transition: opacity 0.2s;
+}
 
-footer { text-align: center; padding: 1rem 0; font-size: 0.9rem; background: #f0f0f0; }
+.sidebar ul li a:hover {
+  opacity: 0.6;
+}
+
+.content {
+  margin-left: 200px;
+  padding: 2rem;
+  flex: 1;
+}
+
+.hero img {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: cover;
+}
+
+.info {
+  margin-top: 3rem;
+}
+
+.info h1 {
+  font-weight: normal;
+  text-transform: lowercase;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.info p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
