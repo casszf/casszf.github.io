@@ -6,14 +6,17 @@
   <title>POP UP!</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'MiltonOne';
+      src: url('MiltonOne.otf') format('opentype');
+    }
     body {
-      font-family: 'Space Grotesk', sans-serif;
-      background-color: #fdf6e3;
+      background-color: #f8e9a1;
       margin: 0;
       padding: 2rem;
       color: #111;
+      font-family: Arial, sans-serif;
     }
     .topbar {
       margin-bottom: 2rem;
@@ -27,14 +30,14 @@
     }
     h1 {
       text-align: center;
-      font-weight: 600;
       font-size: 2rem;
-      margin-bottom: 1rem;
+      font-family: 'MiltonOne', sans-serif;
     }
     .popup-info {
       text-align: center;
       white-space: pre-line;
       font-size: 1.2rem;
+      font-family: 'MiltonOne', sans-serif;
       margin-bottom: 2rem;
     }
     form {
@@ -47,10 +50,14 @@
       font-size: 1rem;
     }
     label {
-      font-weight: 600;
+      font-weight: bold;
+      margin-top: 1rem;
     }
     .menu-options {
       margin-top: 1rem;
+    }
+    .menu-options br {
+      margin-bottom: 1rem;
     }
     button {
       padding: 0.75rem;
@@ -59,6 +66,7 @@
       border: none;
       font-size: 1rem;
       cursor: pointer;
+      margin-top: 1rem;
     }
     .success-message {
       display: none;
@@ -85,19 +93,19 @@ Dimanche 27 Juillet 2025
     </div>
 
     <form action="https://formspree.io/f/mzzvbdrz" method="POST" onsubmit="this.classList.add('success')">
-      <label for="nom">Nom* :</label>
-      <input type="text" name="nom" required />
+      <label for="lastname">Last Name* :</label>
+      <input type="text" name="lastname" required />
 
-      <label for="prenom">Prénom* :</label>
-      <input type="text" name="prenom" required />
+      <label for="name">Name* :</label>
+      <input type="text" name="name" required />
 
-      <label>Commande* :</label>
+      <label>What will you get?* :</label>
       <div class="menu-options">
-        <input type="checkbox" name="menu" value="original" required /> original – Banka’s trout, cream cheese, red onions, dill, olive oil, pickles, pepper<br>
-        <input type="checkbox" name="menu" value="peter’s favorite" /> peter’s favorite – cucumber, cream cheese, olive oil, pepper<br>
-        <input type="checkbox" name="menu" value="high summer" /> high summer – fresh colorful tomatoes, cream cheese, olive oil, pickles, pepper<br>
-        <input type="checkbox" name="menu" value="almond butter & jam" /> almond butter & jam – our yummy homemade almond butter, seasonal jam – keep it simple!<br>
-        <input type="checkbox" name="menu" value="wild strawberry" /> wild strawberry – fresh strawberries, cream cheese, honey, Plaq’s grué de cacao<br>
+        <input type="checkbox" name="menu" value="original" required /> Original – Banka’s trout, cream cheese, red onions, dill, olive oil, pickles, pepper<br><br>
+        <input type="checkbox" name="menu" value="peter’s favorite" /> Peter’s Favorite – cucumber, cream cheese, olive oil, pepper<br><br>
+        <input type="checkbox" name="menu" value="high summer" /> High Summer – fresh colorful tomatoes, cream cheese, olive oil, pickles, pepper<br><br><br>
+        <input type="checkbox" name="menu" value="almond butter & jam" /> Almond Butter & Jam – our yummy homemade almond butter, seasonal jam – keep it simple!<br><br>
+        <input type="checkbox" name="menu" value="wild strawberry" /> Wild Strawberry – fresh strawberries, cream cheese, honey, Plaq’s grué de cacao<br>
       </div>
 
       <button type="submit">RSVP</button>
