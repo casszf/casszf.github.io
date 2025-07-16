@@ -30,14 +30,16 @@
     }
     h1 {
       text-align: center;
-      font-size: 2rem;
-      font-family: 'MiltonOne', sans-serif;
+      font-size: 2.5rem;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      margin-bottom: 1rem;
     }
     .popup-info {
       text-align: center;
       white-space: pre-line;
-      font-size: 1.2rem;
-      font-family: 'MiltonOne', sans-serif;
+      font-size: 1.5rem;
+      font-family: Arial, sans-serif;
       margin-bottom: 2rem;
     }
     form {
@@ -85,7 +87,7 @@
     <a href="index.html"><img src="favicon.png" alt="Favicon" class="logo" /></a>
   </header>
   <main class="content">
-    <h1>POP UP!</h1>
+    <h1>Pop-up!</h1>
     <div class="popup-info">
 Dimanche 27 Juillet 2025
 5 Rue Henry Monnier, Paris
@@ -93,17 +95,17 @@ Dimanche 27 Juillet 2025
     </div>
 
     <form action="https://formspree.io/f/mzzvbdrz" method="POST" onsubmit="this.classList.add('success')">
-      <label for="lastname">Last Name* :</label>
-      <input type="text" name="lastname" required />
-
       <label for="name">Name* :</label>
       <input type="text" name="name" required />
+
+      <label for="lastname">Last Name* :</label>
+      <input type="text" name="lastname" required />
 
       <label>What will you get?* :</label>
       <div class="menu-options">
         <input type="checkbox" name="menu" value="original" required /> Original – Banka’s trout, cream cheese, red onions, dill, olive oil, pickles, pepper<br><br>
         <input type="checkbox" name="menu" value="peter’s favorite" /> Peter’s Favorite – cucumber, cream cheese, olive oil, pepper<br><br>
-        <input type="checkbox" name="menu" value="high summer" /> High Summer – fresh colorful tomatoes, cream cheese, olive oil, pickles, pepper<br><br><br>
+        <input type="checkbox" name="menu" value="high summer" /> High Summer – fresh colorful tomatoes, cream cheese, olive oil, pickles, pepper + extra sardines<br><br><br>
         <input type="checkbox" name="menu" value="almond butter & jam" /> Almond Butter & Jam – our yummy homemade almond butter, seasonal jam – keep it simple!<br><br>
         <input type="checkbox" name="menu" value="wild strawberry" /> Wild Strawberry – fresh strawberries, cream cheese, honey, Plaq’s grué de cacao<br>
       </div>
