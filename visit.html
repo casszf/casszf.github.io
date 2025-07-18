@@ -2,76 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Visit</title>
-  <link rel="icon" href="favicon.png" />
-  <style>
-  body {
-    background-color: #f8e9a1;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-  }
-  header .left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .logo {
-    height: 60px;
-  }
-  nav {
-    display: flex;
-    gap: 1.5rem;
-  }
-  nav a {
-    font-size: 1rem;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    text-transform: lowercase;
-  }
-  .language-switch {
-    margin-left: 1rem;
-    font-size: 0.8rem;
-  }
-  .hero {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-  }
-  .about-text {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.1rem;
-  }
-  main {
-    padding: 2rem;
-    max-width: 700px;
-    margin: auto;
-    font-size: 1rem;
-  }
-</style>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Visit Us – Orbite Bagels</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.png" type="image/png" />
 </head>
 <body>
-  <header>
-    <div class="left">
-      <a href="index.html"><img src="favicon.png" alt="Favicon" class="logo" /></a>
-      <div class="language-switch">
-        <a href="visit_fr.html">fr</a>
-      </div>
-    </div>
-    <nav>
-      <a href="menu.html">menu</a>
-      <a href="visit.html">visit us!</a>
-      <a href="popup.html">pop-up</a>
-    </nav>
-  </header>
-  <main><p>Follow us @orbite.bagels for our next sale day!</p></main>
+  
+<header class="topbar">
+  <a href="index.html"><img src="favicon.png" alt="Favicon" class="logo" /></a>
+  <nav class="nav">
+    <a href="about.html">about</a>
+    <a href="menu.html">menu</a>
+    <a href="visit.html">visit us!</a>
+  </nav>
+</header>
+
+  <main class="content">
+    <p class="page-text">follow us on <a href="https://www.instagram.com/orbite.bagels" target="_blank">@orbite.bagels</a> to know our next sale day!</p>
+  </main>
 </body>
 </html>
