@@ -36,11 +36,17 @@ body {
 }
 
 .hero-image {
-  width: 100%;
-  max-width: 700px;
-  height: auto;
-  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .hero-image {
+    height: auto;
   }
+}
 
 .about-spacing {
   height: 30px; /* espace vide entre l’image et le texte */
@@ -58,6 +64,13 @@ body {
     max-width: 100%;
     height: auto;
   }
+}
+
+@font-face {
+  font-family: 'MiltonOne';
+  src: url('MiltonOne.woff2') format('woff2'),
+       url('MiltonOne.woff') format('woff');
+  font-display: swap;
 }
 
 
