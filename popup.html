@@ -6,74 +6,6 @@
   <title>POP UP!</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.png" />
-  <style>
-    @font-face {
-      font-family: 'MiltonOne';
-      src: url('MiltonOne.otf') format('opentype');
-    }
-    body {
-      margin: 0;
-      padding: 2rem;
-      color: #111;
-      font-family: "MiltonOne", sans-serif;
-    }
-    .topbar {
-      margin-bottom: 2rem;
-    }
-    .topbar img.logo {
-      height: 40px;
-    }
-    .content {
-      max-width: 600px;
-      margin: auto;
-    }
-    
-    .popup-info {
-      text-align: center;
-      white-space: pre-line;
-      font-size: 2.5rem;
-      font-family: "MiltonOne", sans-serif;
-      margin-bottom: 2rem;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    input[type="text"] {
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-    label {
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-    .menu-options {
-      margin-top: 1rem;
-    }
-    .menu-options br {
-      margin-bottom: 1rem;
-    }
-    button {
-      padding: 0.75rem;
-      background-color: black;
-      color: white;
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-    .success-message {
-      display: none;
-      text-align: center;
-      color: green;
-      font-weight: bold;
-      margin-top: 2rem;
-    }
-    form.success + .success-message {
-      display: block;
-    }
-  </style>
 </head>
 <body>
   <header class="topbar">
@@ -82,10 +14,12 @@
   <main class="content">
     <p class="popup-title">a friends & family pop-up!</p>
     <div class="popup-info">
-<strong>dimanche 27 juillet 2025
-5 rue henry monnier, paris
-11 heures 30... until sold out!
-    </strong></div>
+      <strong>
+      dimanche 27 juillet 2025<br />
+      5 rue henry monnier, paris<br />
+      11 heures 30... until sold out!
+      </strong>
+    </div>
 
     <form action="https://formspree.io/f/mzzvbdrz" method="POST" onsubmit="this.classList.add('success')">
       <label for="name">Name* :</label>
