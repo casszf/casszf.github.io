@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'MiltonOne';
+  src: url('MiltonOne.woff2') format('woff2'),
+       url('MiltonOne.woff') format('woff');
+  font-display: swap;
+}
+
 body {
   margin: 0;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -66,12 +73,7 @@ body {
   }
 }
 
-@font-face {
-  font-family: 'MiltonOne';
-  src: url('MiltonOne.woff2') format('woff2'),
-       url('MiltonOne.woff') format('woff');
-  font-display: swap;
-}
+
 
 
 .content {
