@@ -91,7 +91,7 @@
   <header class="topbar">
     <a href="index.html"><img src="favicon.png" alt="Favicon" class="logo" /></a>
   </header>
-  <main class="content">
+  <main class="content" id="main-content">
     <p class="popup-title">A FRIENDS & FAMILY POPUP!</p>
     <div class="popup-info">
 dimanche 27 juillet 2025
@@ -109,7 +109,7 @@ dimanche 27 juillet 2025
 
       <button type="submit">RSVP</button>
     </form>
-    <div id="confirmation" style="display.none; text-align:center;color:green;margin-top:1rem;">
+    <div id="confirmation" style="display: none; text-align: center; color:green; margin-top:2rem;">
       merci! votre inscription au pop-up est confirmée, à dimanche!🥯</div>
   </main>
   <script>
@@ -125,7 +125,7 @@ dimanche 27 juillet 2025
     });
 
     if (response.ok) {
-      form.style.display = "none";
+      document.getElementById("main-content").style.display = "none";
       document.getElementById("confirmation").style.display = "block";
     } else {
       alert("Une erreur est survenue. Merci de réessayer.");
