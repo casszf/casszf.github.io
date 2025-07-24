@@ -79,7 +79,6 @@
     .success-message {
       display: none;
       text-align: center;
-      color: green;
       font-weight: bold;
       margin-top: 2rem;
     }
@@ -101,7 +100,7 @@ dimanche 27 juillet 2025
 <strong>cash ou paypal only :)))</strong>
     </div>
 
-    <form action="https://formspree.io/f/mzzvbdrz" method="POST" onsubmit="this.classList.add('success')">
+    <form id="rsvp-form">
       <label for="name">prénom* :</label>
       <input type="text" name="name" required />
 
@@ -110,8 +109,30 @@ dimanche 27 juillet 2025
 
       <button type="submit">RSVP</button>
     </form>
-
-    <div class="success-message">merci! votre inscription au pop-up est confirmée, à dimanche!🥯</div>
+    <div id="confirmation" style="display.none; text-align:center;color:green;margin-top:1rem;">
+      merci! votre inscription au pop-up est confirmée, à dimanche!🥯</div>
   </main>
+  <script>
+    document.getElementById('rsvp-form').addEventListener('submit',asyncfunction(e){
+  e.preventDefault();
+  const form=e.target;
+  const data=new Formdata(form);
+
+  const response=await fetch("https://formspree.io/f/mzzvbdrz",{
+    method:"POST",
+    body:data,
+    headers:{'Accept':'application/json'}
+      });
+  if (response.ok){
+    form.style.display= "none";
+    document.getElementById("confirmation").style.display="block";
+    }else {
+    alert("une erreur est survenue. merci de réessayer.");
+    }
+    });
+  </script>
+  
+    
+  </script>
 </body>
 </html>
