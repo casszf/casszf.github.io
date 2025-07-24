@@ -51,10 +51,3 @@ body {
   font-size: 12px;
 }
 
-@font-face {
-  font-family:'LTPerfume';
-  src: url('LTPerfume.woff2) format('woff2'),
-    url('LTPerfume.woff) format('woff');
-  font)display:swap;
-}
-
