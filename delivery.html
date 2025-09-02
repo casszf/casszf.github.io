@@ -160,11 +160,21 @@
     <input id="nom" name="nom" type="text" required autocomplete="family-name">
   </div>
   <div>
-    <label for="telephone">Téléphone (06 / +33)</label>
-   <input id="telephone" name="telephone" type="tel" required
+    <label for="telephone">Téléphone</label>
+<!-- Téléphone -->
+<input id="telephone" name="telephone" type="tel" required
        pattern="^(?:0[1-9]\d{8}|(?:\+33|0033)[1-9]\d{8})$"
        placeholder="06XXXXXXXX ou +336XXXXXXXX" inputmode="tel">
-  </div>
+<script>
+  // Nettoyage en direct: enlève espaces, points, tirets, et convertit 0033 -> +33
+  const tel = document.getElementById('telephone');
+  tel.addEventListener('input', () => {
+    let v = tel.value;
+    v = v.replace(/[^\d+]/g, '');   // garde uniquement chiffres et +
+    v = v.replace(/^00/, '+');      // 0033 -> +33
+    tel.value = v;
+  });
+</script>
   <div>
     <label for="adresse">Adresse</label>
     <input id="adresse" name="adresse" type="text" required autocomplete="street-address">
