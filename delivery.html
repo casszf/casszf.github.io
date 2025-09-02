@@ -62,9 +62,12 @@
       max-width: 300px;
       font-family: Georgia, serif;
     }
-    label {
-      font-weight: bold;
-      font-family: Georgia, serif;
+    label,legend {
+      font-weight: normal;   /* enlève le gras */
+      font-size: 1rem;       /* fixe une taille uniforme (ex. 16px/1rem) */
+      font-family: Georgia, serif;  /* garde la même police que le reste du texte */
+    }
+      
     }
     button {
       padding: 0.75rem 1.5rem;
@@ -144,7 +147,7 @@
   <!-- Commentaires -->
   <div>
     <label for="commentaires">Commentaires (optionnel)</label>
-    <textarea id="commentaires" name="commentaires" rows="3" placeholder="Allergies, créneau, etc."></textarea>
+    <textarea id="commentaires" name="commentaires" rows="3" placeholder="Allergies, etc."></textarea>
   </div>
 
    <!-- Consentement -->
@@ -264,9 +267,13 @@
     qtyInput.inputMode = 'numeric';
 
     // Sardines en extra — par moitié
+    const sardWrap = document.createElement('div');
+    sardWrap.id = `sard_wrap_${idx}`;
+    
     const sardLabel = document.createElement('label');
     sardLabel.setAttribute('for', `sard_${idx}`);
     sardLabel.textContent = 'Sardines en extra (nb de moitiés)';
+    
     const sardInput = document.createElement('input');
     sardInput.type = 'number';
     sardInput.id = `sard_${idx}`;
@@ -275,6 +282,9 @@
     sardInput.step = '1';
     sardInput.value = '0';
     sardInput.inputMode = 'numeric';
+    
+    sardWrap.appendChild(sardLabel);
+    sardWrap.appendChild(sardInput);
 
     // Prix de ligne
     const lineTotal = document.createElement('div');
@@ -290,8 +300,12 @@
     // Aligner logique: taille masquée si almond
     function syncVisibility() {
       const isAlmond = (recipeSelect.value === 'almond');
+       // Taille cachée si almond
       sizeLabel.style.display = isAlmond ? 'none' : '';
       sizeSelect.style.display = isAlmond ? 'none' : '';
+
+      // Sardines cachées si almond
+      sardWrap.style.display = isAlmond ? 'none' : '';
 
       // borne max sardines = nb de moitiés dans la ligne
       const qty = parseInt(qtyInput.value || '0', 10);
@@ -352,9 +366,11 @@
     row.appendChild(qtyInput);
     row.appendChild(sardLabel);
     row.appendChild(sardInput);
+    row.appendChild(sardWrap);
     row.appendChild(document.createTextNode('Total ligne : '));
     row.appendChild(lineTotal);
     row.appendChild(delBtn);
+    
 
     bagelsWrap.appendChild(row);
   }
