@@ -165,6 +165,14 @@
 <input id="telephone" name="telephone" type="tel" required
        pattern="^(?:0[1-9]\d{8}|(?:\+33|0033)[1-9]\d{8})$"
        placeholder="06XXXXXXXX ou +336XXXXXXXX" inputmode="tel">
+
+     <!-- Bloc "merci" affiché après envoi -->
+<div id="merci" style="display:none">
+  <h2>Merci 🎉</h2>
+  <p>commande confirmée! vous recevrez un message au moment de la livraison🥯</p>
+  <button id="newOrder" type="button">Passer une autre commande</button>
+</div>
+    
 <script>
   // Nettoyage en direct: enlève espaces, points, tirets, et convertit 0033 -> +33
   const tel = document.getElementById('telephone');
@@ -537,11 +545,6 @@
 </script>
 
 
-    <!-- Bloc "merci" affiché après envoi -->
-<div id="merci" style="display:none">
-  <h2>Merci 🎉</h2>
-  <p>commande confirmée! vous recevrez un message au moment de la livraison🥯</p>
-  <button id="newOrder" type="button">Passer une autre commande</button>
-</div>
+   
 
   
