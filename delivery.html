@@ -243,10 +243,10 @@
     recipeSelect.id = `recipe_${idx}`;
     recipeSelect.name = 'recipe[]';
     [
-      {v:'original', t:"Original — truite fumée (8€ moitié / 14€ entier)"},
-      {v:'peters',   t:"Peter’s favorite — concombres (6€ moitié / 11€ entier)"},
-      {v:'summer',   t:"High summer — tomates (6€ moitié / 11€ entier)"},
-      {v:'almond',   t:"Almond butter & jam — 5€"}
+      {v:'original', t:"original — truite fumée (8€ moitié / 14€ entier)"},
+      {v:'peters',   t:"peter’s favorite — concombres (6€ moitié / 11€ entier)"},
+      {v:'summer',   t:"high summer — tomates (6€ moitié / 11€ entier)"},
+      {v:'almond',   t:"almond butter & jam — 5€"}
     ].forEach(o => {
       const opt = document.createElement('option');
       opt.value = o.v; opt.textContent = o.t;
@@ -261,8 +261,8 @@
     sizeSelect.id = `size_${idx}`;
     sizeSelect.name = 'size[]';
     [
-      {v:'half', t:'Moitié'},
-      {v:'whole', t:'Entier'}
+      {v:'half', t:'moitié'},
+      {v:'whole', t:'entier'}
     ].forEach(o => {
       const opt = document.createElement('option');
       opt.value = o.v; opt.textContent = o.t;
