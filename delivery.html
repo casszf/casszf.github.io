@@ -23,7 +23,7 @@
       margin: 0;
       font-family: Georgia, serif;
       font-size: 18px;
-      background-color: #fef3bd;
+      background-color: #ec6994;
       padding: 0.5rem;
       color: #111;
     }
@@ -340,12 +340,27 @@
     // Aligner logique: taille masquée si almond
     function syncVisibility() {
       const isAlmond = (recipeSelect.value === 'almond');
+      
        // Taille cachée si almond
       sizeLabel.style.display = isAlmond ? 'none' : '';
       sizeSelect.style.display = isAlmond ? 'none' : '';
 
       // Sardines cachées si almond
       sardWrap.style.display = isAlmond ? 'none' : '';
+
+      if (isAlmond) {
+    // ⚠️ reset sardines à 0 si on choisit la confiture
+    sardInput.value = '0';
+  } else {
+    // borne max sardines selon moitié/entier × quantité
+    const qty = parseInt(qtyInput.value || '0', 10);
+    const halvesPerUnit = (sizeSelect.value === 'whole' ? 2 : 1);
+    const maxHalves = halvesPerUnit * qty;
+    sardInput.max = String(maxHalves);
+    if (parseInt(sardInput.value || '0', 10) > maxHalves) {
+      sardInput.value = String(maxHalves);
+    }
+  }
 
       // borne max sardines = nb de moitiés dans la ligne
       const qty = parseInt(qtyInput.value || '0', 10);
@@ -359,20 +374,21 @@
     function linePrice() {
       const recipe = recipeSelect.value;
       const qty = parseInt(qtyInput.value || '0', 10);
+      
       let base = 0;
+      let sardCost = 0;
 
-      if (recipe === 'almond') {
-        base = PRICES.almond.single * qty;
-      } else {
-        const size = sizeSelect.value; // half|whole
-        const p = PRICES[recipe][size];
-        base = p * qty;
-      }
-      const sardHalves = parseInt(sardInput.value || '0', 10);
-      const sardCost = sardHalves * PRICES.sardine_per_half;
+       if (recipe === 'almond') {
+    base = PRICES.almond.single * qty;     // pas de sardines sur sucré
+  } else {
+    const size = sizeSelect.value;         // half | whole
+    base = PRICES[recipe][size] * qty;
+    const sardHalves = parseInt(sardInput.value || '0', 10);
+    sardCost = sardHalves * PRICES.sardine_per_half;
+  }
 
-      return base + sardCost;
-    }
+  return base + sardCost;
+}
 
     function updateLine() {
       syncVisibility();
