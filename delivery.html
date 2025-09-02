@@ -65,26 +65,29 @@
     }
     
     /* Labels au-dessus + même style */
-    #commande label, #commande legend {
-    display: block; /* force le label à prendre toute la ligne */
-    margin: 0 0 .35rem; /* petit espace sous le label */
-    font-weight: normal;
-    font-size: 1rem;
-    font-family: inherit;
+   #commande label, #commande legend {
+  display: block;
+  margin: 0 0 .35rem;
+  font-weight: normal;
+  font-size: 1rem;
+  font-family: inherit;
 }
+    
 /* Chaque champ sur sa propre ligne (bloc) + largeur homogène */
-  #commande input,
-  #commande select,
-  #commande textarea {
-    display: block;          /* << clé pour le retour à la ligne */
-    width: 100%;
-    max-width: 320px;        /* ajuste si tu veux plus large */
-    box-sizing: border-box;
-    padding: .5rem .75rem;
-    font: inherit;
-    font-weight: normal;
-    margin: 0 0 .75rem;      /* espace sous chaque champ */
-  }
+#commande input[type="text"],
+#commande input[type="tel"],
+#commande input[type="number"],
+#commande textarea,
+#commande select {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  padding: .5rem .75rem;
+  font: inherit;
+  font-weight: normal;
+  margin: 0 0 .75rem;  /* espace sous chaque champ */
+}
 
   /* Exceptions : les cases à cocher (vegan) restent en ligne avec leur label */
   #commande input[type="checkbox"] {
@@ -315,6 +318,7 @@
     sardInput.id = `sard_${idx}`;
     sardInput.name = 'sardines_halves[]';
     sardInput.min = '0';
+    sardInput.max = '2';
     sardInput.step = '1';
     sardInput.value = '0';
     sardInput.inputMode = 'numeric';
