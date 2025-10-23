@@ -92,33 +92,33 @@
 
       <!-- Slots click & collect -->
       <div class="slots" id="slots">
-        <p class="muted" style="margin-top:8px">Choisis un créneau :</p>
-        <div class="grid-2">
-          <div>
-            <label class="name">samedi 25 octobre</label>
-            <select id="slot-samedi">
-              <option value="">— choisir —</option>
-              <option>11H30-12H</option>
-              <option>12H-12H30</option>
-              <option>12H30-13H</option>
-              <option>13H-13H30</option>
-              <option>13H30-14H</option>
-            </select>
-          </div>
-          <div>
-            <label class="name">dimanche 26 octobre</label>
-            <select id="slot-dimanche">
-              <option value="">— choisir —</option>
-              <option>11H30-12H</option>
-              <option>12H-12H30</option>
-              <option>12H30-13H</option>
-              <option>13H-13H30</option>
-              <option>13H30-14H</option>
-            </select>
-          </div>
-        </div>
-        <p class="muted">Sélectionne <em>un</em> créneau (samedi ou dimanche).</p>
-      </div>
+  <p class="muted" style="margin-top:8px">Choisis un créneau :</p>
+  <div class="grid-2">
+    <div>
+      <label class="name">Samedi</label>
+      <select id="slot-samedi">
+        <option value="">— choisir —</option>
+        <option>11H30-12H</option>
+        <option>12H-12H30</option>
+        <option>12H30-13H</option>
+        <option>13H-13H30</option>
+        <option>13H30-14H</option>
+      </select>
+    </div>
+    <div>
+      <label class="name">Dimanche</label>
+      <select id="slot-dimanche">
+        <option value="">— choisir —</option>
+        <option>11H30-12H</option>
+        <option>12H-12H30</option>
+        <option>12H30-13H</option>
+        <option>13H-13H30</option>
+        <option>13H30-14H</option>
+      </select>
+    </div>
+  </div>
+  <p class="muted">Sélectionne <em>un seul</em> créneau (samedi <strong>ou</strong> dimanche).</p>
+</div>
 
       <!-- Infos livraison -->
       <div class="delivery-extra" id="delivery-extra">
@@ -216,6 +216,23 @@
       const isCollect = mode === 'collect';
       slots.style.display = isCollect ? 'block' : 'none';
       deliveryExtra.style.display = !isCollect ? 'block' : 'none';
+
+      // ===== Empêcher la sélection de 2 créneaux =====
+const samediSelect = document.getElementById('slot-samedi');
+const dimancheSelect = document.getElementById('slot-dimanche');
+
+function handleSlotChange(e) {
+  if (e.target.id === 'slot-samedi' && e.target.value !== '') {
+    // Si on choisit un créneau samedi → on vide dimanche
+    dimancheSelect.value = '';
+  } else if (e.target.id === 'slot-dimanche' && e.target.value !== '') {
+    // Si on choisit un créneau dimanche → on vide samedi
+    samediSelect.value = '';
+  }
+}
+
+samediSelect.addEventListener('change', handleSlotChange);
+dimancheSelect.addEventListener('change', handleSlotChange);
 
       // Matcha: uniquement en click & collect
       const matchaSelect = document.querySelector('select.qty[data-key="matcha"]');
