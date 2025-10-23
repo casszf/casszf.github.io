@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BAGELS AT HOME!</title>
+  <title>ORBITE BAGELS AT HOME!</title>
   <style>
     :root{
       --bg:#fafafa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --accent:#111827;
@@ -39,33 +39,33 @@
 <body>
   <div class="container">
     <h1>BAGELS AT HOME!</h1>
-    <p>hello!</p>
+  
 
     <!-- Coordonnées -->
     <div class="card">
       <div class="grid-2">
         <div>
-          <label for="prenom" class="name">Prénom</label>
+          <label for="prenom" class="name">prénom</label>
           <input id="prenom" name="prenom" type="text" placeholder="Ton prénom" autocomplete="given-name" />
         </div>
         <div>
-          <label for="phone" class="name">Numéro de téléphone</label>
+          <label for="phone" class="name">téléphone</label>
           <input id="phone" name="phone" type="tel" placeholder="06 12 34 56 78" autocomplete="tel" />
         </div>
       </div>
     </div>
 
-    <!-- Bagels -->
-    <h2>Dis-nous ce que tu veux commander ?</h2>
+    <!-- bagels -->
+    <h2>dis-nous ce que tu veux commander ?</h2>
     <div class="card" id="bagels">
       <!-- Les lignes sont générées par JS depuis la configuration des produits -->
     </div>
 
-    <!-- Boissons -->
+    <!-- boissons -->
     <div class="card" id="drinks">
       <div class="row">
         <div>
-          <div class="name">Thé glacé</div>
+          <div class="name">thé glacé citron & fleur de sureau</div>
           <div class="meta">3,50€</div>
         </div>
         <select class="qty" data-type="drink" data-key="iced_tea" aria-label="Quantité Thé glacé">
@@ -74,7 +74,7 @@
       </div>
       <div class="row">
         <div>
-          <div class="name">Matcha latte avoine <span class="tag">chaud – click &amp; collect uniquement</span></div>
+          <div class="name">matcha latte avoine <span class="tag">chaud – click &amp; collect uniquement</span></div>
           <div class="meta">6,00€</div>
         </div>
         <select class="qty" data-type="drink" data-key="matcha" aria-label="Quantité Matcha latte avoine">
@@ -95,7 +95,7 @@
         <p class="muted" style="margin-top:8px">Choisis un créneau :</p>
         <div class="grid-2">
           <div>
-            <label class="name">Samedi</label>
+            <label class="name">samedi 25 octobre</label>
             <select id="slot-samedi">
               <option value="">— choisir —</option>
               <option>11H30-12H</option>
@@ -106,7 +106,7 @@
             </select>
           </div>
           <div>
-            <label class="name">Dimanche</label>
+            <label class="name">dimanche 26 octobre</label>
             <select id="slot-dimanche">
               <option value="">— choisir —</option>
               <option>11H30-12H</option>
@@ -122,24 +122,24 @@
 
       <!-- Infos livraison -->
       <div class="delivery-extra" id="delivery-extra">
-        <p class="disclaimer">Livraison à 2,90€ uniquement dans le 2ᵉ, 3ᵉ, 4ᵉ, 9ᵉ et 10ᵉ.</p>
-        <label class="name" for="adresse">Adresse de livraison</label>
+        <p class="disclaimer">Livraison à 2,90€ uniquement dans le 2ᵉ, 3ᵉ, 4ᵉ et 10ᵉ.</p>
+        <label class="name" for="adresse">adresse de livraison</label>
         <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…"></textarea>
       </div>
     </div>
 
     <!-- Total -->
     <div class="total" id="totalBox">
-      <span>Total</span>
+      <span>total</span>
       <span id="totalAmount">0,00 €</span>
     </div>
     <p class="muted" id="totalNote" style="margin:6px 2px 0">
-      Les montants des bagels tiennent compte du fait que chaque paire de moitiés d’une <strong>même recette</strong> est comptée comme 1 entier quand le prix entier existe.
+      les montants des bagels tiennent compte du fait que chaque paire de moitiés d’une <strong>même recette</strong> est comptée comme 1 entier quand le prix entier existe.
     </p>
 
     <!-- CTA -->
     <div style="margin-top:16px">
-      <button class="btn" id="submitBtn">Valider commande</button>
+      <button class="btn" id="submitBtn">valider commande</button>
     </div>
 
     <!-- Confirmation -->
