@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ORBITE BAGELS AT HOME!</title>
 
+  <!-- Préchargement de la police (fichier à la racine du site) -->
+  <link rel="preload" as="font" href="/ArchiveGaramondStd-Italic.woff2" type="font/woff2" crossorigin>
+
   <style>
-    /* ===== POLICE COMPATIBLE iPHONE (WOFF2) ===== */
+    /* ===== POLICE GARANTIE iPHONE ===== */
     @font-face{
       font-family: "ArchiveGaramond";
-      src:
-        url("fonts/ArchiveGaramondStd-Italic.woff2") format("woff2"),
-        url("fonts/ArchiveGaramondStd-Italic.woff") format("woff"),
-        url("fonts/ArchiveGaramondStd-Italic.ttf") format("truetype");
+      src: url("/ArchiveGaramondStd-Italic.woff2?v=2") format("woff2");
       font-weight: 400;
-      font-style: italic;   /* le fichier est italique */
+      font-style: italic;
       font-display: swap;
     }
 
@@ -27,16 +27,17 @@
 
     body{
       margin:0;
-      font-family:"ArchiveGaramond", serif; /* ta police perso */
+      font-family:"ArchiveGaramond", serif;
+      font-style: italic;
       background:var(--bg);
       color:var(--ink);
-      /* si tu veux agrandir un peu la taille globale, décommente la ligne suivante */
-      /* font-size:18px; line-height:1.5; */
+      font-size:18px;
+      line-height:1.5;
     }
 
     .container{max-width:900px; margin:24px auto; padding:0 16px 64px}
-    h1{font-size:28px; margin:0 0 6px}
-    h2{font-size:18px; margin:20px 0 8px}
+    h1{font-size:32px; margin:0 0 6px}
+    h2{font-size:20px; margin:20px 0 8px}
     p{margin:6px 0}
     .card{background:var(--card); border:1px solid var(--ring); border-radius:14px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.05); margin-top:12px}
 
@@ -66,7 +67,7 @@
 
     .disclaimer{font-size:14px; color:#b45309; background:#fff7ed; border:1px solid #fed7aa; padding:10px 12px; border-radius:10px}
     .hidden{display:none !important}
-    .tag{font-size:12px; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:2px 8px; border-radius:999px; margin-left:8px}
+    .tag{font-size:16px; font-style:italic; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:4px 10px; border-radius:999px; margin-left:8px; display:inline-block; vertical-align:middle}
 
     /* Centrer la colonne quantité et son en-tête */
     .row div:last-child { text-align:center; }
@@ -96,12 +97,11 @@
     </div>
 
     <!-- Bagels -->
-    <h2>dis-nous ce que tu veux commander</h2>
+    <h2>dis-nous ce que tu veux commander ?</h2>
     <div class="card" id="bagels"></div>
 
     <!-- Boissons -->
     <div class="card" id="drinks">
-      <!-- En-tête boissons -->
       <div class="row" style="font-weight:600; border-bottom:2px solid #e5e7eb">
         <div>boisson</div>
         <div>nombre</div>
@@ -123,7 +123,7 @@
     </div>
 
     <!-- Mode -->
-    <h2>dis-nous comment tu souhaites récupérer ta commande ?</h2>
+    <h2>dis-nous comment tu souhaites récupérer ta commande</h2>
     <div class="card">
       <div class="choices">
         <label><input type="radio" name="mode" value="collect" checked> click and collect</label>
@@ -185,16 +185,14 @@
   </div>
 
   <script>
-    /* ===== CONFIG ===== */
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/manprywb";
 
-    /* Produits */
     const BAGELS = [
-      { key:'original', name:'original', desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`, half:8.0, whole:15.0 },
+      { key:'original', name:'original', desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`, half:8.0, whole:14.0 },
       { key:'eggs', name:'eggs', desc:`œufs brouillés, cream cheese maison, huile d'olive, noix de muscade, ciboulette, épices Roellinger`, half:7.0, whole:12.0 },
       { key:'peters', name:`peter's favorite`, desc:`concombres, cream cheese maison, huile d'olive, sumac, poivres Roellinger`, half:6.0, whole:11.0 },
       { key:'high_summer', name:'high summer', desc:`tomates, cream cheese maison, huile d'olive, poivres Roellinger`, half:6.0, whole:11.0 },
-      { key:'high_summer_deluxe', name:'high summer deluxe', desc:`tomates, sardines, cream cheese maison, huile d'olive, poivres Roellinger`, half:7.5, whole:14.0 },
+      { key:'high_summer_deluxe', name:'high summer deluxe', desc:`tomates, sardines, cream cheese maison, huile d'olive, poivres Roellinger`, half:7.0, whole:12.0 },
       { key:'abj', name:'almond butter & jam', desc:`beurre d'amande maison et confiture de saison`, half:5.0 }
     ];
 
@@ -205,43 +203,27 @@
 
     const fmt = new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' });
 
-    /* ===== Génération des bagels + en-tête ===== */
     const bagelsBox = document.getElementById('bagels');
-
-    // En-tête "recette / nombre de moitié"
     const headerRow = document.createElement('div');
     headerRow.className = 'row';
     headerRow.style.fontWeight = '600';
     headerRow.style.borderBottom = '2px solid #e5e7eb';
-    headerRow.innerHTML = `
-      <div>recette</div>
-      <div>nombre de moitié</div>
-    `;
+    headerRow.innerHTML = `<div>recette</div><div>nombre de moitié</div>`;
     bagelsBox.appendChild(headerRow);
 
-    // Lignes produits
-    BAGELS.forEach(item => {
-      const row = document.createElement('div');
-      row.className = 'row';
-      row.innerHTML = `
+    BAGELS.forEach(item=>{
+      const row=document.createElement('div');
+      row.className='row';
+      row.innerHTML=`
         <div>
           <div class="name">${item.name}</div>
-          ${item.desc ? `<div class="muted">${item.desc}</div>` : ''}
-          <div class="meta">
-            ${fmt.format(item.half)} moitié
-            ${
-              item.whole != null
-                ? ` / ${fmt.format(item.whole)} entier`
-                : ` / <span class="muted">pas de prix entier</span>`
-            }
-          </div>
+          ${item.desc ? `<div class="muted">${item.desc}</div>`:''}
+          <div class="meta">${fmt.format(item.half)} moitié ${item.whole ? ` / ${fmt.format(item.whole)} entier` : ''}</div>
         </div>
-        <select class="qty" data-type="bagel" data-key="${item.key}"></select>
-      `;
+        <select class="qty" data-type="bagel" data-key="${item.key}"></select>`;
       bagelsBox.appendChild(row);
     });
 
-    /* Remplir options quantité 0..9 */
     document.querySelectorAll('select.qty').forEach(sel=>{
       for(let i=0;i<=9;i++){
         const opt=document.createElement('option');
@@ -250,7 +232,6 @@
       }
     });
 
-    /* Créneaux exclusifs samedi/dimanche */
     const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
     function handleSlotChange(e){
@@ -260,7 +241,6 @@
     samediSelect.addEventListener('change',handleSlotChange);
     dimancheSelect.addEventListener('change',handleSlotChange);
 
-    /* UI collecte / livraison */
     const slots=document.getElementById('slots');
     const deliveryExtra=document.getElementById('delivery-extra');
     const modeInputs=document.querySelectorAll('input[name="mode"]');
@@ -276,25 +256,22 @@
     modeInputs.forEach(r=>r.addEventListener('change',updateModeUI));
     updateModeUI();
 
-    /* Calcul du total */
     function computeBagelsTotal(){
       let total=0;
       document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
         const key=sel.dataset.key;
         const qty=Number(sel.value||0);
         const item=BAGELS.find(b=>b.key===key);
-        if(!item || !Number.isFinite(qty) || qty<=0) return;
-        const hasWhole = typeof item.whole === 'number' && Number.isFinite(item.whole);
-        if(hasWhole){
+        if(!item) return;
+        if(item.whole){
           const pairs=Math.floor(qty/2);
           const singles=qty%2;
-          total += (pairs*item.whole) + (singles*item.half);
-        }else{
-          total += qty*item.half;
-        }
+          total += pairs*item.whole + singles*item.half;
+        }else total += qty*item.half;
       });
       return total;
     }
+
     function computeDrinksTotal(){
       let total=0;
       document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
@@ -305,20 +282,22 @@
       });
       return total;
     }
+
     function computeDeliveryFee(){
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      return mode==='delivery' ? 2.9 : 0;
+      return mode==='delivery'?2.9:0;
     }
+
     function computeTotal(){
       const total=computeBagelsTotal()+computeDrinksTotal()+computeDeliveryFee();
       document.getElementById('totalAmount').textContent=fmt.format(total);
     }
+
     document.addEventListener('change',e=>{
       if(e.target.matches('select.qty')||e.target.matches('input[name="mode"]')) computeTotal();
     });
     computeTotal();
 
-    /* Envoi Formspree */
     const submitBtn=document.getElementById('submitBtn');
     submitBtn.addEventListener('click',async()=>{
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
@@ -340,14 +319,11 @@
       document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
         const q=parseInt(sel.value||'0',10); if(q>0) data.boissons[sel.dataset.key]=q;
       });
-
-      // Validations minimales
       if(!data.nom){alert("merci d’indiquer ton nom");return;}
       if(!data.prenom){alert("merci d’indiquer ton prénom");return;}
       if(!data.phone){alert("merci d’indiquer ton numéro de téléphone");return;}
-      if(mode==='collect' && !data.creneau){alert("merci de choisir un créneau");return;}
-      if(mode==='delivery' && !data.adresse){alert("merci d’indiquer ton adresse");return;}
-
+      if(mode==='collect'&&!data.creneau){alert("merci de choisir un créneau");return;}
+      if(mode==='delivery'&&!data.adresse){alert("merci d’indiquer ton adresse");return;}
       try{
         const res=await fetch(FORMSPREE_ENDPOINT,{
           method:"POST",
@@ -359,14 +335,7 @@
           const conf=document.getElementById('confirmation');
           conf.classList.remove('hidden');
           conf.scrollIntoView({behavior:'smooth'});
-        } else {
-          alert("oops, l’envoi a échoué. réessaie dans un instant");
-        }
-      }catch(e){
-        console.error(e);
-        alert("impossible d’envoyer la commande (connexion ?). réessaie 🙏");
-      }
+        }else alert("oops, l’envoi a échoué. réessaie dans un instant");
+      }catch(e){alert("impossible d’envoyer la commande (connexion ?). réessaie 🙏");}
     });
-  </script>
-</body>
-</html>
+  </
