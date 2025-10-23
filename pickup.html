@@ -4,14 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ORBITE BAGELS AT HOME!</title>
-  
+
   <style>
-    /* ===== POLICE PERSO ===== */
-    @font-face {
-      font-family: "ArchiveGaramondStd-Italic";
-      src: url("fonts/ArchiveGaramondStd-Italic.ttf") format("truetype");
-      font-weight: normal;
-      font-style: italic;
+    /* ===== POLICE COMPATIBLE iPHONE (WOFF2) ===== */
+    @font-face{
+      font-family: "ArchiveGaramond";
+      src:
+        url("fonts/ArchiveGaramondStd-Italic.woff2") format("woff2"),
+        url("fonts/ArchiveGaramondStd-Italic.woff") format("woff"),
+        url("fonts/ArchiveGaramondStd-Italic.ttf") format("truetype");
+      font-weight: 400;
+      font-style: italic;   /* le fichier est italique */
       font-display: swap;
     }
 
@@ -22,13 +25,13 @@
 
     *{box-sizing:border-box}
 
-    body {
+    body{
       margin:0;
-      font-family:"ArchiveGaramondStd-Italic", serif;
+      font-family:"ArchiveGaramond", serif; /* ta police perso */
       background:var(--bg);
       color:var(--ink);
-      font-size: 20px; /* ← taille du texte global (par défaut ~16px) */
-      line-height: 1.5; /* plus d’espace entre les lignes */
+      /* si tu veux agrandir un peu la taille globale, décommente la ligne suivante */
+      /* font-size:18px; line-height:1.5; */
     }
 
     .container{max-width:900px; margin:24px auto; padding:0 16px 64px}
@@ -36,38 +39,37 @@
     h2{font-size:18px; margin:20px 0 8px}
     p{margin:6px 0}
     .card{background:var(--card); border:1px solid var(--ring); border-radius:14px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.05); margin-top:12px}
+
     .row{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px dashed #e5e7eb}
     .row:last-child{border-bottom:none}
     .name{font-weight:600}
     .meta{font-size:14px; color:var(--muted)}
     .muted{color:var(--muted); font-size:14px}
-    .qty{width:64px; padding:8px; border:1px solid var(--ring); border-radius:10px; background:#fff; font-size:16px}
+
+    .qty{width:64px; padding:8px; border:1px solid var(--ring); border-radius:10px; background:#fff; font-size:16px; text-align:center}
+
+    .grid-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px}
     .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    input[type="text"], input[type="tel"], textarea, select{width:100%; padding:10px 12px; border:1px solid var(--ring); border-radius:10px; font-size:16px; background:#fff}
+
+    input[type="text"], input[type="tel"], textarea, select{
+      width:100%; padding:10px 12px; border:1px solid var(--ring); border-radius:10px; font-size:16px; background:#fff
+    }
+
     .choices{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
     .slots{display:none; margin-top:8px}
     .delivery-extra{display:none; margin-top:8px}
+
     .total{font-size:20px; font-weight:700; display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid var(--ring); border-radius:12px; background:#fff}
+
     .btn{appearance:none; border:none; background:var(--brand); color:#fff; padding:12px 16px; border-radius:12px; font-size:16px; cursor:pointer}
     .btn:disabled{opacity:.5; cursor:not-allowed}
+
     .disclaimer{font-size:14px; color:#b45309; background:#fff7ed; border:1px solid #fed7aa; padding:10px 12px; border-radius:10px}
     .hidden{display:none !important}
-    .tag{font-size:16px; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:2px 8px; border-radius:999px; margin-left:8px}
- /* Centrer le texte dans la colonne de droite */
-.row div:last-child {
-  text-align: center;
-}
+    .tag{font-size:12px; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:2px 8px; border-radius:999px; margin-left:8px}
 
-/* Centrer le texte dans les menus déroulants */
-.row select.qty {
-  text-align: center;
-}
-
-/* (Optionnel) Rendre le header un peu plus visible */
-.row.header {
-  font-weight: 600;
-  border-bottom: 2px solid #e5e7eb;
-}
+    /* Centrer la colonne quantité et son en-tête */
+    .row div:last-child { text-align:center; }
   </style>
 </head>
 
@@ -77,7 +79,11 @@
 
     <!-- Coordonnées -->
     <div class="card">
-      <div class="grid-2">
+      <div class="grid-3">
+        <div>
+          <label for="nom" class="name">nom</label>
+          <input id="nom" name="nom" type="text" placeholder="Ton nom de famille" autocomplete="family-name" />
+        </div>
         <div>
           <label for="prenom" class="name">prénom</label>
           <input id="prenom" name="prenom" type="text" placeholder="Ton prénom" autocomplete="given-name" />
@@ -95,6 +101,11 @@
 
     <!-- Boissons -->
     <div class="card" id="drinks">
+      <!-- En-tête boissons -->
+      <div class="row" style="font-weight:600; border-bottom:2px solid #e5e7eb">
+        <div>boisson</div>
+        <div>nombre</div>
+      </div>
       <div class="row">
         <div>
           <div class="name">thé glacé citron & fleur de sureau</div>
@@ -151,7 +162,7 @@
 
       <!-- Livraison -->
       <div class="delivery-extra" id="delivery-extra">
-        <p class="disclaimer">Livraison à 2,90€ uniquement dans le 2ᵉ, 3ᵉ, 4ᵉ et 10ᵉ.</p>
+        <p class="disclaimer">Livraison à 2,90€ uniquement dans le 2ᵉ, 3ᵉ, 4ᵉ, 9ᵉ et 10ᵉ.</p>
         <label class="name" for="adresse">adresse de livraison</label>
         <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…"></textarea>
       </div>
@@ -169,7 +180,7 @@
     </div>
 
     <div class="card hidden" id="confirmation">
-      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande 🥯, si tu as choisi livraison nous te confirmerons l'heure de livraison</p>
+      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande, si tu as choisi livraison nous te confirmerons l'heure de livraison</p>
     </div>
   </div>
 
@@ -177,6 +188,7 @@
     /* ===== CONFIG ===== */
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/manprywb";
 
+    /* Produits */
     const BAGELS = [
       { key:'original', name:'original', desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`, half:8.0, whole:15.0 },
       { key:'eggs', name:'eggs', desc:`œufs brouillés, cream cheese maison, huile d'olive, noix de muscade, ciboulette, épices Roellinger`, half:7.0, whole:12.0 },
@@ -193,19 +205,22 @@
 
     const fmt = new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' });
 
-    /* ===== Génération des bagels ===== */
+    /* ===== Génération des bagels + en-tête ===== */
     const bagelsBox = document.getElementById('bagels');
+
+    // En-tête "recette / nombre de moitié"
+    const headerRow = document.createElement('div');
+    headerRow.className = 'row';
+    headerRow.style.fontWeight = '600';
+    headerRow.style.borderBottom = '2px solid #e5e7eb';
+    headerRow.innerHTML = `
+      <div>recette</div>
+      <div>nombre de moitié</div>
+    `;
+    bagelsBox.appendChild(headerRow);
+
+    // Lignes produits
     BAGELS.forEach(item => {
-      const headerRow = document.createElement('div');
-headerRow.className = 'row';
-headerRow.style.fontWeight = '600';
-headerRow.style.borderBottom = '2px solid #e5e7eb'; // jolie séparation
-headerRow.innerHTML = `
-  <div style="padding-left:4px;">recette</div>
-  <div style="text-align:center;">nombre de moitié</div>
-`;
-bagelsBox.appendChild(headerRow);
-bagelsBox.appendChild(headerRow);
       const row = document.createElement('div');
       row.className = 'row';
       row.innerHTML = `
@@ -226,7 +241,7 @@ bagelsBox.appendChild(headerRow);
       bagelsBox.appendChild(row);
     });
 
-    /* ===== Remplir options quantité ===== */
+    /* Remplir options quantité 0..9 */
     document.querySelectorAll('select.qty').forEach(sel=>{
       for(let i=0;i<=9;i++){
         const opt=document.createElement('option');
@@ -235,7 +250,7 @@ bagelsBox.appendChild(headerRow);
       }
     });
 
-    /* ===== Créneaux samedi/dimanche exclusifs ===== */
+    /* Créneaux exclusifs samedi/dimanche */
     const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
     function handleSlotChange(e){
@@ -245,7 +260,7 @@ bagelsBox.appendChild(headerRow);
     samediSelect.addEventListener('change',handleSlotChange);
     dimancheSelect.addEventListener('change',handleSlotChange);
 
-    /* ===== UI collecte / livraison ===== */
+    /* UI collecte / livraison */
     const slots=document.getElementById('slots');
     const deliveryExtra=document.getElementById('delivery-extra');
     const modeInputs=document.querySelectorAll('input[name="mode"]');
@@ -261,43 +276,38 @@ bagelsBox.appendChild(headerRow);
     modeInputs.forEach(r=>r.addEventListener('change',updateModeUI));
     updateModeUI();
 
-    /* ===== Calcul du total ===== */
+    /* Calcul du total */
     function computeBagelsTotal(){
-  let total = 0;
-
-  document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel => {
-    const key = sel.dataset.key;
-    const qty = Number(sel.value || 0);
-    const item = BAGELS.find(b => b.key === key);
-    if (!item || !Number.isFinite(qty) || qty <= 0) return;
-
-    // ⚠️ On ne fait la règle "2 moitiés = 1 entier" que si un prix entier est défini
-    const hasWhole = typeof item.whole === 'number' && Number.isFinite(item.whole);
-
-    if (hasWhole) {
-      const pairs = Math.floor(qty / 2);   // ex: 4 → 2 paires
-      const singles = qty % 2;             // ex: 4 → 0 reste
-      total += (pairs * item.whole) + (singles * item.half);
-    } else {
-      total += qty * item.half;            // ex: AB&J (pas de prix entier)
+      let total=0;
+      document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
+        const key=sel.dataset.key;
+        const qty=Number(sel.value||0);
+        const item=BAGELS.find(b=>b.key===key);
+        if(!item || !Number.isFinite(qty) || qty<=0) return;
+        const hasWhole = typeof item.whole === 'number' && Number.isFinite(item.whole);
+        if(hasWhole){
+          const pairs=Math.floor(qty/2);
+          const singles=qty%2;
+          total += (pairs*item.whole) + (singles*item.half);
+        }else{
+          total += qty*item.half;
+        }
+      });
+      return total;
     }
-  });
-
-  return total;
-}
     function computeDrinksTotal(){
       let total=0;
       document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
         const key=sel.dataset.key;
-        const qty=parseInt(sel.value||'0',10);
+        const qty=Number(sel.value||0);
         const item=DRINKS[key];
-        if(item) total+=qty*item.price;
+        if(item) total += qty*item.price;
       });
       return total;
     }
     function computeDeliveryFee(){
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      return mode==='delivery'?2.9:0;
+      return mode==='delivery' ? 2.9 : 0;
     }
     function computeTotal(){
       const total=computeBagelsTotal()+computeDrinksTotal()+computeDeliveryFee();
@@ -308,11 +318,12 @@ bagelsBox.appendChild(headerRow);
     });
     computeTotal();
 
-    /* ===== Envoi Formspree ===== */
+    /* Envoi Formspree */
     const submitBtn=document.getElementById('submitBtn');
     submitBtn.addEventListener('click',async()=>{
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
       const data={
+        nom:document.getElementById('nom').value.trim(),
         prenom:document.getElementById('prenom').value.trim(),
         phone:document.getElementById('phone').value.trim(),
         mode,
@@ -329,10 +340,14 @@ bagelsBox.appendChild(headerRow);
       document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
         const q=parseInt(sel.value||'0',10); if(q>0) data.boissons[sel.dataset.key]=q;
       });
+
+      // Validations minimales
+      if(!data.nom){alert("merci d’indiquer ton nom");return;}
       if(!data.prenom){alert("merci d’indiquer ton prénom");return;}
       if(!data.phone){alert("merci d’indiquer ton numéro de téléphone");return;}
-      if(mode==='collect'&&!data.creneau){alert("merci de choisir un créneau");return;}
-      if(mode==='delivery'&&!data.adresse){alert("merci d’indiquer ton adresse");return;}
+      if(mode==='collect' && !data.creneau){alert("merci de choisir un créneau");return;}
+      if(mode==='delivery' && !data.adresse){alert("merci d’indiquer ton adresse");return;}
+
       try{
         const res=await fetch(FORMSPREE_ENDPOINT,{
           method:"POST",
