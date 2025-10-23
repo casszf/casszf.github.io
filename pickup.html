@@ -162,6 +162,7 @@
     // ===== Config produits =====
     // Rappel de la règle: pour chaque recette, toutes les 2 quantités = 1 entier (si un prix entier est défini).
     // Si une recette n'a PAS de prix "entier", on compte simplement 2 moitiés sans réduction.
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/manprywb"; 
     const BAGELS = [
       { key: 'original', name: 'original', desc: 'truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger', half: 8.0, whole: 14.0 },
       { key: 'eggs', name: 'eggs', desc: 'oeufs brouillés, cream cheese maison, huile d'olive, noix de muscade, ciboulette, épices Roellinger', half: 7.0, whole: 12.0 },
@@ -316,15 +317,75 @@ dimancheSelect.addEventListener('change', handleSlotChange);
 
     // ===== Soumission: confirmation =====
     const submitBtn = document.getElementById('submitBtn');
-    submitBtn.addEventListener('click', () => {
-      // Au clic: masquer tout sauf le message de confirmation
+    submitBtn.addEventListener('click', async () => {
+  // 1) Construire l’objet commande
+  const mode = document.querySelector('input[name="mode"]:checked')?.value;
+  const data = {
+    prenom: document.getElementById('prenom').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    mode, // "collect" ou "delivery"
+    creneau: mode === 'collect'
+      ? (document.getElementById('slot-samedi').value || document.getElementById('slot-dimanche').value || "")
+      : "",
+    adresse: mode === 'delivery' ? document.getElementById('adresse').value.trim() : "",
+    bagels: {},
+    boissons: {},
+    total: document.getElementById('totalAmount').textContent,
+    // Champs utiles côté Formspree:
+    _subject: "Nouvelle commande BAGELS AT HOME!",
+    _page: location.href
+  };
+
+  // 2) Récupérer les quantités sélectionnées
+  document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel => {
+    const qty = parseInt(sel.value || "0", 10);
+    if (qty > 0) data.bagels[sel.dataset.key] = qty;
+  });
+  document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel => {
+    const qty = parseInt(sel.value || "0", 10);
+    if (qty > 0) data.boissons[sel.dataset.key] = qty;
+  });
+
+  // 3) (facultatif) petites validations
+  if (!data.prenom) { alert("merci d’indiquer ton prénom"); return; }
+  if (!data.phone) { alert("merci d’indiquer ton numéro de téléphone"); return; }
+  if (mode === 'collect' && !data.creneau) { alert("merci de choisir un créneau"); return; }
+  if (mode === 'delivery' && !data.adresse) { alert("merci d’indiquer ton adresse"); return; }
+
+  // 4) Envoi à Formspree
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",        // important pour la réponse JSON
+        "Content-Type": "application/json"   // on envoie du JSON
+      },
+      body: JSON.stringify(data)
+    });
+
+    // 5) Affichage confirmation (même si l’envoi a réussi)
+    if (res.ok) {
+      // Masquer la page et afficher ton message de confirmation existant
       const container = document.querySelector('.container');
-      // masquer tout sauf #confirmation, #confirmation doit rester visible
       Array.from(container.children).forEach(child => {
-        if(child.id !== 'confirmation'){
-          child.classList.add('hidden');
-        }
+        if (child.id !== 'confirmation') child.classList.add('hidden');
       });
+      const conf = document.getElementById('confirmation');
+      conf.classList.remove('hidden');
+      conf.scrollIntoView({ behavior:'smooth', block:'start' });
+    } else {
+      // Erreur Formspree lisible
+      const err = await res.json().catch(() => ({}));
+      console.error("Formspree error:", err);
+      alert("oops, l’envoi a échoué. réessaie dans un instant");
+    }
+  } catch (e) {
+    console.error(e);
+    alert("impossible d’envoyer la commande (connexion ?). réessaie 🙏");
+  }
+});
+<input type="text" name="_gotcha" style="display:none">
+
       const conf = document.getElementById('confirmation');
       conf.classList.remove('hidden');
       // Optionnel: scroll vers le message
