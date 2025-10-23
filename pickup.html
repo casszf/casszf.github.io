@@ -153,17 +153,17 @@
     // Rappel de la règle: pour chaque recette, toutes les 2 quantités = 1 entier (si un prix entier est défini).
     // Si une recette n'a PAS de prix "entier", on compte simplement 2 moitiés sans réduction.
     const BAGELS = [
-      { key: 'original', name: 'Recette original', half: 8.0, whole: 14.0 },
-      { key: 'eggs', name: 'Eggs', half: 7.0, whole: 12.0 },
-      { key: 'peters', name: "Peter's favorite", half: 6.0, whole: 11.0 },
-      { key: 'high_summer', name: 'High summer', half: 6.0, whole: 11.0 },
-      { key: 'high_summer_deluxe', name: 'High summer deluxe', half: 7.0, whole: 12.0 },
-      { key: 'abj', name: 'Almond butter & jam', half: 5.0, whole: null } // pas de prix entier fourni
+      { key: 'original', name: 'original', desc: 'truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger', half: 8.0, whole: 14.0 },
+      { key: 'eggs', name: 'eggs', desc: 'oeufs brouillés, cream cheese maison, huile d'olive, noix de muscade, ciboulette, épices Roellinger', half: 7.0, whole: 12.0 },
+      { key: 'peters', name: 'peter's favorite', desc:'concombres, cream cheese maison, huile d'olive, sumac, poivres Roellinger', half: 6.0, whole: 11.0 },
+      { key: 'high_summer', name: 'high summer', desc: 'tomates, cream cheese maison, huile d'olive, poivres Roellinger', half: 6.0, whole: 11.0 },
+      { key: 'high_summer_deluxe', name: 'high summer deluxe', desc: 'tomates, sardines, cream cheese maison, huile d'olive, poivres Roellinger', half: 7.0, whole: 12.0 },
+      { key: 'abj', name: 'almond butter & jam', desc: 'beurre d'amande maison et confiture de saison', half: 5.0 } // pas de prix entier fourni
     ];
 
     const DRINKS = {
-      iced_tea: { name: 'Thé glacé', price: 3.5 },
-      matcha: { name: 'Matcha latte avoine (chaud – C&C)', price: 6.0, collectOnly: true }
+      iced_tea: { name: 'thé glacé', price: 3.5 },
+      matcha: { name: 'matcha latte avoine (chaud – C&C)', price: 6.0, collectOnly: true }
     };
 
     const fmt = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' });
