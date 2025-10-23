@@ -301,29 +301,45 @@
     const submitBtn=document.getElementById('submitBtn');
     submitBtn.addEventListener('click',async()=>{
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
+
+      // === NOUVEAU : calcul du jour + créneau à partir des selects
+      let jour = "";
+      let creneau = "";
+      if (mode === "collect") {
+        if (samediSelect.value) { jour = "samedi"; creneau = samediSelect.value; }
+        else if (dimancheSelect.value) { jour = "dimanche"; creneau = dimancheSelect.value; }
+      }
+      const creneau_complet = (jour && creneau) ? `${jour} ${creneau}` : "";
+
       const data={
         nom:document.getElementById('nom').value.trim(),
         prenom:document.getElementById('prenom').value.trim(),
         phone:document.getElementById('phone').value.trim(),
         mode,
-        creneau:mode==='collect'?(samediSelect.value||dimancheSelect.value||""):"",
+        // champs envoyés à Formspree
+        jour,                  // <— le jour (samedi/dimanche)
+        creneau,               // <— la tranche horaire seule
+        creneau_complet,       // <— pratique : "samedi 12H-12H30"
         adresse:mode==='delivery'?document.getElementById('adresse').value.trim():"",
         bagels:{}, boissons:{},
         total:document.getElementById('totalAmount').textContent,
         _subject:"Nouvelle commande BAGELS AT HOME!",
         _page:location.href
       };
+
       document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
         const q=parseInt(sel.value||'0',10); if(q>0) data.bagels[sel.dataset.key]=q;
       });
       document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
         const q=parseInt(sel.value||'0',10); if(q>0) data.boissons[sel.dataset.key]=q;
       });
+
       if(!data.nom){alert("merci d’indiquer ton nom");return;}
       if(!data.prenom){alert("merci d’indiquer ton prénom");return;}
       if(!data.phone){alert("merci d’indiquer ton numéro de téléphone");return;}
-      if(mode==='collect'&&!data.creneau){alert("merci de choisir un créneau");return;}
+      if(mode==='collect'&&!creneau){alert("merci de choisir un créneau");return;}
       if(mode==='delivery'&&!data.adresse){alert("merci d’indiquer ton adresse");return;}
+
       try{
         const res=await fetch(FORMSPREE_ENDPOINT,{
           method:"POST",
