@@ -53,6 +53,21 @@
     .disclaimer{font-size:14px; color:#b45309; background:#fff7ed; border:1px solid #fed7aa; padding:10px 12px; border-radius:10px}
     .hidden{display:none !important}
     .tag{font-size:16px; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:2px 8px; border-radius:999px; margin-left:8px}
+ /* Centrer le texte dans la colonne de droite */
+.row div:last-child {
+  text-align: center;
+}
+
+/* Centrer le texte dans les menus déroulants */
+.row select.qty {
+  text-align: center;
+}
+
+/* (Optionnel) Rendre le header un peu plus visible */
+.row.header {
+  font-weight: 600;
+  border-bottom: 2px solid #e5e7eb;
+}
   </style>
 </head>
 
@@ -181,6 +196,16 @@
     /* ===== Génération des bagels ===== */
     const bagelsBox = document.getElementById('bagels');
     BAGELS.forEach(item => {
+      const headerRow = document.createElement('div');
+headerRow.className = 'row';
+headerRow.style.fontWeight = '600';
+headerRow.style.borderBottom = '2px solid #e5e7eb'; // jolie séparation
+headerRow.innerHTML = `
+  <div style="padding-left:4px;">recette</div>
+  <div style="text-align:center;">nombre de moitié</div>
+`;
+bagelsBox.appendChild(headerRow);
+bagelsBox.appendChild(headerRow);
       const row = document.createElement('div');
       row.className = 'row';
       row.innerHTML = `
