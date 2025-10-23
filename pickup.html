@@ -236,20 +236,28 @@
 
     /* ===== Calcul du total ===== */
     function computeBagelsTotal(){
-      let total=0;
-      document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
-        const key=sel.dataset.key;
-        const qty=parseInt(sel.value||'0',10);
-        const item=BAGELS.find(b=>b.key===key);
-        if(!item) return;
-        if(item.whole!=null){
-          const pairs=Math.floor(qty/2);
-          const singles=qty%2;
-          total+=pairs*item.whole+singles*item.half;
-        } else total+=qty*item.half;
-      });
-      return total;
+  let total = 0;
+
+  document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel => {
+    const key = sel.dataset.key;
+    const qty = Number(sel.value || 0);
+    const item = BAGELS.find(b => b.key === key);
+    if (!item || !Number.isFinite(qty) || qty <= 0) return;
+
+    // ⚠️ On ne fait la règle "2 moitiés = 1 entier" que si un prix entier est défini
+    const hasWhole = typeof item.whole === 'number' && Number.isFinite(item.whole);
+
+    if (hasWhole) {
+      const pairs = Math.floor(qty / 2);   // ex: 4 → 2 paires
+      const singles = qty % 2;             // ex: 4 → 0 reste
+      total += (pairs * item.whole) + (singles * item.half);
+    } else {
+      total += qty * item.half;            // ex: AB&J (pas de prix entier)
     }
+  });
+
+  return total;
+}
     function computeDrinksTotal(){
       let total=0;
       document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
