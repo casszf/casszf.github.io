@@ -176,6 +176,7 @@
       row.innerHTML = `
         <div>
           <div class="name">${item.name}</div>
+          ${item.desc ? `<div class="muted">${item.desc}</div>`:''}
           <div class="meta">
             ${fmt.format(item.half)} moitié
             ${
