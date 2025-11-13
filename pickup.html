@@ -5,36 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ORBITE BAGELS AT HOME!</title>
 
-  <!-- Préchargement de la police (fichier à la racine du site) -->
   <link rel="preload" as="font" href="/ArchiveGaramondStd-Italic.woff2" type="font/woff2" crossorigin>
 
   <style>
-    /* ===== POLICE GARANTIE iPHONE ===== */
     @font-face{
-      font-family: "ArchiveGaramond";
-      src: url("/ArchiveGaramondStd-Italic.woff2?v=2") format("woff2");
-      font-weight: 400;
-      font-style: italic;
-      font-display: swap;
+      font-family:"ArchiveGaramond";
+      src:url("/ArchiveGaramondStd-Italic.woff2?v=2") format("woff2");
+      font-weight:400; font-style:italic; font-display:swap;
     }
-
-    :root{
-      --bg:#fafafa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280;
-      --accent:#111827; --ring:#e5e7eb; --brand:#111827;
-    }
-
+    :root{ --bg:#fafafa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --ring:#e5e7eb; --brand:#111827; }
     *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      font-family:"ArchiveGaramond", serif;
-      font-style: italic;
-      background:var(--bg);
-      color:var(--ink);
-      font-size:18px;
-      line-height:1.5;
-    }
-
+    body{ margin:0; font-family:"ArchiveGaramond",serif; font-style:italic; background:var(--bg); color:var(--ink); font-size:18px; line-height:1.5; }
     .container{max-width:900px; margin:24px auto; padding:0 16px 64px}
     h1{font-size:32px; margin:0 0 6px}
     h2{font-size:20px; margin:20px 0 8px}
@@ -46,7 +27,6 @@
     .name{font-weight:600}
     .meta{font-size:14px; color:var(--muted)}
     .muted{color:var(--muted); font-size:14px}
-
     .qty{width:64px; padding:8px; border:1px solid var(--ring); border-radius:10px; background:#fff; font-size:16px; text-align:center}
 
     .grid-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px}
@@ -57,8 +37,8 @@
     }
 
     .choices{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
-    .slots{display:none; margin-top:8px}
     .delivery-extra{display:none; margin-top:8px}
+    .warning{font-size:14px; color:#b91c1c; background:#fee2e2; border:1px solid #fecaca; padding:10px 12px; border-radius:10px; display:none; margin-top:8px}
 
     .total{font-size:20px; font-weight:700; display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid var(--ring); border-radius:12px; background:#fff}
 
@@ -67,9 +47,7 @@
 
     .disclaimer{font-size:14px; color:#b45309; background:#fff7ed; border:1px solid #fed7aa; padding:10px 12px; border-radius:10px}
     .hidden{display:none !important}
-    .tag{font-size:16px; font-style:italic; color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:4px 10px; border-radius:999px; margin-left:8px; display:inline-block; vertical-align:middle}
 
-    /* Centrer la colonne quantité et son en-tête */
     .row div:last-child { text-align:center; }
   </style>
 </head>
@@ -83,15 +61,15 @@
       <div class="grid-3">
         <div>
           <label for="nom" class="name">nom</label>
-          <input id="nom" name="nom" type="text" placeholder="Ton nom de famille" autocomplete="family-name" />
+          <input id="nom" name="nom" type="text" placeholder="Ton nom de famille" autocomplete="family-name" required />
         </div>
         <div>
           <label for="prenom" class="name">prénom</label>
-          <input id="prenom" name="prenom" type="text" placeholder="Ton prénom" autocomplete="given-name" />
+          <input id="prenom" name="prenom" type="text" placeholder="Ton prénom" autocomplete="given-name" required />
         </div>
         <div>
           <label for="phone" class="name">téléphone</label>
-          <input id="phone" name="phone" type="tel" placeholder="06 12 34 56 78" autocomplete="tel" />
+          <input id="phone" name="phone" type="tel" placeholder="06 12 34 56 78" autocomplete="tel" required />
         </div>
       </div>
     </div>
@@ -99,28 +77,6 @@
     <!-- Bagels -->
     <h2>dis-nous ce que tu veux commander</h2>
     <div class="card" id="bagels"></div>
-
-    <!-- Boissons -->
-    <div class="card" id="drinks">
-      <div class="row" style="font-weight:600; border-bottom:2px solid #e5e7eb">
-        <div>boisson</div>
-        <div>nombre</div>
-      </div>
-      <div class="row">
-        <div>
-          <div class="name">thé glacé citron & fleur de sureau</div>
-          <div class="meta">4,00€</div>
-        </div>
-        <select class="qty" data-type="drink" data-key="iced_tea"></select>
-      </div>
-      <div class="row">
-        <div>
-          <div class="name">matcha latte avoine <span class="tag">chaud – click &amp; collect uniquement</span></div>
-          <div class="meta">6,00€</div>
-        </div>
-        <select class="qty" data-type="drink" data-key="matcha"></select>
-      </div>
-    </div>
 
     <!-- Mode -->
     <h2>dis-nous comment tu souhaites récupérer ta commande</h2>
@@ -130,9 +86,9 @@
         <label><input type="radio" name="mode" value="delivery"> livraison</label>
       </div>
 
-      <!-- Créneaux -->
+      <!-- Créneaux (obligatoires pour tous) -->
       <div class="slots" id="slots">
-        <p class="muted">Choisis un créneau :</p>
+        <p class="muted">Choisis un créneau (obligatoire) :</p>
         <div class="grid-2">
           <div>
             <label class="name">Samedi</label>
@@ -143,6 +99,8 @@
               <option>12H30-13H</option>
               <option>13H-13H30</option>
               <option>13H30-14H</option>
+              <option>14H-14H30</option>
+              <option>14H30-15H</option>
             </select>
           </div>
           <div>
@@ -154,6 +112,8 @@
               <option>12H30-13H</option>
               <option>13H-13H30</option>
               <option>13H30-14H</option>
+              <option>14H-14H30</option>
+              <option>14H30-15H</option>
             </select>
           </div>
         </div>
@@ -162,9 +122,10 @@
 
       <!-- Livraison -->
       <div class="delivery-extra" id="delivery-extra">
-        <p class="disclaimer">Livraison à 2,90€ uniquement dans le 2ᵉ, 3ᵉ, 4ᵉ, 9ᵉ et 10ᵉ.</p>
+        <p class="disclaimer">Livraison à 2,90€.</p>
         <label class="name" for="adresse">adresse de livraison</label>
-        <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…"></textarea>
+        <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…" ></textarea>
+        <div class="warning" id="delivery-warning">La livraison est disponible pour une commande d’au moins 15,00 € (hors frais de livraison).</div>
       </div>
     </div>
 
@@ -173,7 +134,7 @@
       <span>total</span>
       <span id="totalAmount">0,00 €</span>
     </div>
-    <p class="muted" id="totalNote">les montants des bagels tiennent compte du fait que chaque paire de moitiés d’une même recette est comptée comme 1 entier quand le prix entier existe.</p>
+    <p class="muted" id="totalNote">chaque paire de moitiés de la même recette compte comme 1 entier quand un prix entier existe.</p>
 
     <div style="margin-top:16px">
       <button class="btn" id="submitBtn">valider commande</button>
@@ -186,29 +147,34 @@
 
   <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/manprywb";
+    const DELIVERY_MIN = 15.0; // seuil commande pour livraison (hors frais)
 
+    // Recettes : ORIGINAL + SUCRÉ
     const BAGELS = [
-      { key:'original', name:'original', desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`, half:8.0, whole:15.0 },
-      { key:'eggs', name:'eggs', desc:`œufs brouillés, cream cheese maison, huile d'olive, noix de muscade, ciboulette, épices Roellinger`, half:7.0, whole:12.0 },
-      { key:'peters', name:`peter's favorite`, desc:`concombres, cream cheese maison, huile d'olive, sumac, poivres Roellinger`, half:6.0, whole:11.0 },
-      { key:'high_summer', name:'high summer', desc:`tomates, cream cheese maison, huile d'olive, poivres Roellinger`, half:6.0, whole:11.0 },
-      { key:'high_summer_deluxe', name:'high summer deluxe', desc:`tomates, sardines, cream cheese maison, huile d'olive, poivres Roellinger`, half:7.5, whole:14.0 },
-      { key:'abj', name:'almond butter & jam', desc:`beurre d'amande maison et confiture de saison`, half:5.0 }
+      {
+        key:'original',
+        name:'original',
+        desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`,
+        half:8.0,
+        whole:15.0
+      },
+      {
+        key:'abj',
+        name:'almond butter & jam',
+        desc:`beurre d'amande maison et confiture de saison`,
+        half:5.0
+      }
     ];
 
-    const DRINKS = {
-      iced_tea: { name:'thé glacé', price:4.0 },
-      matcha: { name:'matcha latte avoine (chaud – C&C)', price:6.0, collectOnly:true }
-    };
+    const fmt = new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'});
 
-    const fmt = new Intl.NumberFormat('fr-FR', { style:'currency', currency:'EUR' });
-
-    const bagelsBox = document.getElementById('bagels');
-    const headerRow = document.createElement('div');
-    headerRow.className = 'row';
-    headerRow.style.fontWeight = '600';
-    headerRow.style.borderBottom = '2px solid #e5e7eb';
-    headerRow.innerHTML = `<div>recette</div><div>nombre de moitié</div>`;
+    // --- Construction UI bagels
+    const bagelsBox=document.getElementById('bagels');
+    const headerRow=document.createElement('div');
+    headerRow.className='row';
+    headerRow.style.fontWeight='600';
+    headerRow.style.borderBottom='2px solid #e5e7eb';
+    headerRow.innerHTML=`<div>recette</div><div>nombre de moitié</div>`;
     bagelsBox.appendChild(headerRow);
 
     BAGELS.forEach(item=>{
@@ -225,13 +191,14 @@
     });
 
     document.querySelectorAll('select.qty').forEach(sel=>{
-      for(let i=0;i<=9;i++){
+      for(let i=0;i<=20;i++){
         const opt=document.createElement('option');
         opt.value=i; opt.textContent=i;
         sel.appendChild(opt);
       }
     });
 
+    // --- Créneaux (un seul jour possible)
     const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
     function handleSlotChange(e){
@@ -241,22 +208,12 @@
     samediSelect.addEventListener('change',handleSlotChange);
     dimancheSelect.addEventListener('change',handleSlotChange);
 
-    const slots=document.getElementById('slots');
+    // --- Mode & livraison
     const deliveryExtra=document.getElementById('delivery-extra');
+    const deliveryWarning=document.getElementById('delivery-warning');
     const modeInputs=document.querySelectorAll('input[name="mode"]');
-    function updateModeUI(){
-      const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      const isCollect=mode==='collect';
-      slots.style.display=isCollect?'block':'none';
-      deliveryExtra.style.display=!isCollect?'block':'none';
-      const matchaSelect=document.querySelector('select.qty[data-key="matcha"]');
-      if(matchaSelect){ if(isCollect){matchaSelect.disabled=false;} else{matchaSelect.value='0';matchaSelect.disabled=true;} }
-      computeTotal();
-    }
-    modeInputs.forEach(r=>r.addEventListener('change',updateModeUI));
-    updateModeUI();
 
-    function computeBagelsTotal(){
+    function getBagelsSubtotal(){
       let total=0;
       document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
         const key=sel.dataset.key;
@@ -267,61 +224,87 @@
           const pairs=Math.floor(qty/2);
           const singles=qty%2;
           total += pairs*item.whole + singles*item.half;
-        }else total += qty*item.half;
+        }else{
+          total += qty*item.half;
+        }
       });
       return total;
     }
+    function deliveryFee(mode){ return mode==='delivery' ? 2.9 : 0; }
 
-    function computeDrinksTotal(){
-      let total=0;
-      document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
-        const key=sel.dataset.key;
-        const qty=Number(sel.value||0);
-        const item=DRINKS[key];
-        if(item) total += qty*item.price;
-      });
-      return total;
-    }
-
-    function computeDeliveryFee(){
+    function updateModeUI(){
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      return mode==='delivery'?2.9:0;
+      deliveryExtra.style.display = (mode==='delivery') ? 'block' : 'none';
+      validateDeliveryThreshold();
+      computeTotal();
+    }
+    modeInputs.forEach(r=>r.addEventListener('change',updateModeUI));
+    updateModeUI();
+
+    function validateDeliveryThreshold(){
+      const mode=document.querySelector('input[name="mode"]:checked')?.value;
+      const subtotal=getBagelsSubtotal(); // hors frais
+      const blocked = (mode==='delivery' && subtotal < DELIVERY_MIN);
+      deliveryWarning.style.display = blocked ? 'block' : 'none';
+      return !blocked;
     }
 
     function computeTotal(){
-      const total=computeBagelsTotal()+computeDrinksTotal()+computeDeliveryFee();
+      const mode=document.querySelector('input[name="mode"]:checked')?.value;
+      const subtotal=getBagelsSubtotal();
+      const total=subtotal + deliveryFee(mode);
       document.getElementById('totalAmount').textContent=fmt.format(total);
     }
 
     document.addEventListener('change',e=>{
-      if(e.target.matches('select.qty')||e.target.matches('input[name="mode"]')) computeTotal();
+      if(e.target.matches('select.qty')||e.target.matches('input[name="mode"]')){
+        validateDeliveryThreshold();
+        computeTotal();
+      }
     });
     computeTotal();
 
+    // --- Helpers créneau
+    function getChosenSlot(){
+      if (samediSelect.value) return { jour:'samedi', creneau:samediSelect.value };
+      if (dimancheSelect.value) return { jour:'dimanche', creneau:dimancheSelect.value };
+      return { jour:'', creneau:'' };
+    }
+
+    // --- Envoi
     const submitBtn=document.getElementById('submitBtn');
     submitBtn.addEventListener('click',async()=>{
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
 
-      // === NOUVEAU : calcul du jour + créneau à partir des selects
-      let jour = "";
-      let creneau = "";
-      if (mode === "collect") {
-        if (samediSelect.value) { jour = "samedi"; creneau = samediSelect.value; }
-        else if (dimancheSelect.value) { jour = "dimanche"; creneau = dimancheSelect.value; }
+      // validations
+      const nom=document.getElementById('nom').value.trim();
+      const prenom=document.getElementById('prenom').value.trim();
+      const phone=document.getElementById('phone').value.trim();
+      const {jour, creneau}=getChosenSlot();
+      const adresse=(mode==='delivery') ? document.getElementById('adresse').value.trim() : "";
+
+      if(!nom){alert("merci d’indiquer ton nom");return;}
+      if(!prenom){alert("merci d’indiquer ton prénom");return;}
+      if(!phone){alert("merci d’indiquer ton numéro de téléphone");return;}
+
+      if(!jour || !creneau){
+        alert("merci de choisir un jour ET un créneau");
+        return;
       }
-      const creneau_complet = (jour && creneau) ? `${jour} ${creneau}` : "";
+
+      if(mode==='delivery'){
+        if(!validateDeliveryThreshold()){
+          alert("la livraison est disponible à partir de 15,00 € de commande (hors frais).");
+          return;
+        }
+        if(!adresse){ alert("merci d’indiquer ton adresse pour la livraison"); return; }
+      }
 
       const data={
-        nom:document.getElementById('nom').value.trim(),
-        prenom:document.getElementById('prenom').value.trim(),
-        phone:document.getElementById('phone').value.trim(),
-        mode,
-        // champs envoyés à Formspree
-        jour,                  // <— le jour (samedi/dimanche)
-        creneau,               // <— la tranche horaire seule
-        creneau_complet,       // <— pratique : "samedi 12H-12H30"
-        adresse:mode==='delivery'?document.getElementById('adresse').value.trim():"",
-        bagels:{}, boissons:{},
+        nom, prenom, phone, mode,
+        jour, creneau, creneau_complet:`${jour} ${creneau}`,
+        adresse,
+        bagels:{},
         total:document.getElementById('totalAmount').textContent,
         _subject:"Nouvelle commande BAGELS AT HOME!",
         _page:location.href
@@ -330,15 +313,6 @@
       document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
         const q=parseInt(sel.value||'0',10); if(q>0) data.bagels[sel.dataset.key]=q;
       });
-      document.querySelectorAll('select.qty[data-type="drink"]').forEach(sel=>{
-        const q=parseInt(sel.value||'0',10); if(q>0) data.boissons[sel.dataset.key]=q;
-      });
-
-      if(!data.nom){alert("merci d’indiquer ton nom");return;}
-      if(!data.prenom){alert("merci d’indiquer ton prénom");return;}
-      if(!data.phone){alert("merci d’indiquer ton numéro de téléphone");return;}
-      if(mode==='collect'&&!creneau){alert("merci de choisir un créneau");return;}
-      if(mode==='delivery'&&!data.adresse){alert("merci d’indiquer ton adresse");return;}
 
       try{
         const res=await fetch(FORMSPREE_ENDPOINT,{
@@ -351,9 +325,13 @@
           const conf=document.getElementById('confirmation');
           conf.classList.remove('hidden');
           conf.scrollIntoView({behavior:'smooth'});
-        }else alert("oops, l’envoi a échoué. réessaie dans un instant");
-      }catch(e){alert("impossible d’envoyer la commande (connexion ?). réessaie 🙏");}
-   });
+        }else{
+          alert("oops, l’envoi a échoué. réessaie dans un instant");
+        }
+      }catch(e){
+        alert("impossible d’envoyer la commande (connexion ?). réessaie 🙏");
+      }
+    });
   </script>
 </body>
 </html>
