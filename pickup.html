@@ -49,6 +49,12 @@
     .hidden{display:none !important}
 
     .row div:last-child { text-align:center; }
+
+    /* VISUEL : option de livraison grisée quand indisponible */
+    .choice-disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 
@@ -84,7 +90,7 @@
     <div class="card">
       <div class="choices">
         <label><input type="radio" name="mode" value="collect" checked> click and collect</label>
-        <label><input type="radio" name="mode" value="delivery"> livraison</label>
+        <label id="delivery-label"><input type="radio" name="mode" value="delivery"> livraison</label>
       </div>
 
       <!-- Créneaux -->
@@ -201,16 +207,23 @@
     // Créneaux
     const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
-    function handleSlotChange(e){
-      if(e.target.id==='slot-samedi' && e.target.value!==''){dimancheSelect.value=''; disableDeliveryForSaturday();}
-      else if(e.target.id==='slot-dimanche' && e.target.value!==''){samediSelect.value=''; enableDeliveryForSunday();}
-    }
-    samediSelect.addEventListener('change',handleSlotChange);
-    dimancheSelect.addEventListener('change',handleSlotChange);
-
     const deliveryExtra=document.getElementById('delivery-extra');
     const deliveryWarning=document.getElementById('delivery-warning');
     const modeInputs=document.querySelectorAll('input[name="mode"]');
+    const deliveryRadio=document.querySelector('input[value="delivery"]');
+    const deliveryLabel=document.getElementById('delivery-label');
+
+    function handleSlotChange(e){
+      if(e.target.id==='slot-samedi' && e.target.value!==''){
+        dimancheSelect.value='';
+        disableDeliveryForSaturday();
+      } else if(e.target.id==='slot-dimanche' && e.target.value!==''){
+        samediSelect.value='';
+        enableDeliveryForSunday();
+      }
+    }
+    samediSelect.addEventListener('change',handleSlotChange);
+    dimancheSelect.addEventListener('change',handleSlotChange);
 
     function getBagelsSubtotal(){
       let total=0;
@@ -244,15 +257,17 @@
     }
 
     function disableDeliveryForSaturday(){
-      const deliveryRadio=document.querySelector('input[value="delivery"]');
+      // décocher + désactiver + griser
       deliveryRadio.checked=false;
       deliveryRadio.disabled=true;
+      deliveryLabel.classList.add('choice-disabled');
       updateModeUI();
     }
 
     function enableDeliveryForSunday(){
-      const deliveryRadio=document.querySelector('input[value="delivery"]');
+      // réactiver + enlever le style grisé
       deliveryRadio.disabled=false;
+      deliveryLabel.classList.remove('choice-disabled');
     }
 
     function computeTotal(){
