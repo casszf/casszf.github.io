@@ -122,7 +122,7 @@
 
       <!-- Livraison -->
       <div class="delivery-extra" id="delivery-extra">
-        <p class="disclaimer">Livraison à 2,90€.</p>
+        <p class="disclaimer">Livraison à 4,50€.</p>
         <label class="name" for="adresse">adresse de livraison</label>
         <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…" ></textarea>
         <div class="warning" id="delivery-warning">La livraison est disponible pour une commande d’au moins 15,00 € (hors frais de livraison).</div>
@@ -230,7 +230,7 @@
       });
       return total;
     }
-    function deliveryFee(mode){ return mode==='delivery' ? 2.9 : 0; }
+    function deliveryFee(mode){ return mode==='delivery' ? 4.5 : 0; }
 
     function updateModeUI(){
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
