@@ -76,6 +76,7 @@
 
     <!-- Bagels -->
     <h2>dis-nous ce que tu veux commander</h2>
+    <p class="muted">nous recommandons 2 moitiés par personne 🍽️</p>
     <div class="card" id="bagels"></div>
 
     <!-- Mode -->
@@ -86,7 +87,7 @@
         <label><input type="radio" name="mode" value="delivery"> livraison</label>
       </div>
 
-      <!-- Créneaux (obligatoires pour tous) -->
+      <!-- Créneaux -->
       <div class="slots" id="slots">
         <p class="muted">Choisis un créneau (obligatoire) :</p>
         <div class="grid-2">
@@ -122,9 +123,9 @@
 
       <!-- Livraison -->
       <div class="delivery-extra" id="delivery-extra">
-        <p class="disclaimer">Livraison à 4,50€.</p>
+        <p class="disclaimer">Livraison à 4,50€ (disponible uniquement le dimanche).</p>
         <label class="name" for="adresse">adresse de livraison</label>
-        <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…" ></textarea>
+        <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…"></textarea>
         <div class="warning" id="delivery-warning">La livraison est disponible pour une commande d’au moins 15,00 € (hors frais de livraison).</div>
       </div>
     </div>
@@ -134,29 +135,28 @@
       <span>total</span>
       <span id="totalAmount">0,00 €</span>
     </div>
-    <p class="muted" id="totalNote">chaque paire de moitiés de la même recette compte comme 1 entier quand un prix entier existe.</p>
+
+    <p class="muted" id="totalNote">chaque moitié est comptée individuellement.</p>
 
     <div style="margin-top:16px">
       <button class="btn" id="submitBtn">valider commande</button>
     </div>
 
     <div class="card hidden" id="confirmation">
-      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande, si tu as choisi livraison nous te confirmerons l'heure de livraison</p>
+      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande. Si tu as choisi livraison (dimanche uniquement), nous te confirmerons l'heure précise.</p>
     </div>
   </div>
 
   <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoverpl";
-    const DELIVERY_MIN = 15.0; // seuil commande pour livraison (hors frais)
+    const DELIVERY_MIN = 15.0;
 
-    // Recettes : ORIGINAL + SUCRÉ
     const BAGELS = [
       {
         key:'original',
         name:'original',
         desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`,
-        half:8.0,
-        whole:16.0
+        half:8.0
       },
       {
         key:'abj',
@@ -174,7 +174,7 @@
     headerRow.className='row';
     headerRow.style.fontWeight='600';
     headerRow.style.borderBottom='2px solid #e5e7eb';
-    headerRow.innerHTML=`<div>recette</div><div>nombre de moitié</div>`;
+    headerRow.innerHTML=`<div>recette</div><div>nombre de moitiés</div>`;
     bagelsBox.appendChild(headerRow);
 
     BAGELS.forEach(item=>{
@@ -184,7 +184,7 @@
         <div>
           <div class="name">${item.name}</div>
           ${item.desc ? `<div class="muted">${item.desc}</div>`:''}
-          <div class="meta">${fmt.format(item.half)} moitié ${item.whole ? ` / ${fmt.format(item.whole)} entier` : ''}</div>
+          <div class="meta">${fmt.format(item.half)} la moitié</div>
         </div>
         <select class="qty" data-type="bagel" data-key="${item.key}"></select>`;
       bagelsBox.appendChild(row);
@@ -198,17 +198,16 @@
       }
     });
 
-    // --- Créneaux (un seul jour possible)
+    // Créneaux
     const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
     function handleSlotChange(e){
-      if(e.target.id==='slot-samedi' && e.target.value!==''){dimancheSelect.value='';}
-      else if(e.target.id==='slot-dimanche' && e.target.value!==''){samediSelect.value='';}
+      if(e.target.id==='slot-samedi' && e.target.value!==''){dimancheSelect.value=''; disableDeliveryForSaturday();}
+      else if(e.target.id==='slot-dimanche' && e.target.value!==''){samediSelect.value=''; enableDeliveryForSunday();}
     }
     samediSelect.addEventListener('change',handleSlotChange);
     dimancheSelect.addEventListener('change',handleSlotChange);
 
-    // --- Mode & livraison
     const deliveryExtra=document.getElementById('delivery-extra');
     const deliveryWarning=document.getElementById('delivery-warning');
     const modeInputs=document.querySelectorAll('input[name="mode"]');
@@ -220,16 +219,11 @@
         const qty=Number(sel.value||0);
         const item=BAGELS.find(b=>b.key===key);
         if(!item) return;
-        if(item.whole){
-          const pairs=Math.floor(qty/2);
-          const singles=qty%2;
-          total += pairs*item.whole + singles*item.half;
-        }else{
-          total += qty*item.half;
-        }
+        total += qty*item.half;
       });
       return total;
     }
+
     function deliveryFee(mode){ return mode==='delivery' ? 4.5 : 0; }
 
     function updateModeUI(){
@@ -243,10 +237,22 @@
 
     function validateDeliveryThreshold(){
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      const subtotal=getBagelsSubtotal(); // hors frais
-      const blocked = (mode==='delivery' && subtotal < DELIVERY_MIN);
-      deliveryWarning.style.display = blocked ? 'block' : 'none';
+      const subtotal=getBagelsSubtotal();
+      const blocked=(mode==='delivery' && subtotal<DELIVERY_MIN);
+      deliveryWarning.style.display=blocked?'block':'none';
       return !blocked;
+    }
+
+    function disableDeliveryForSaturday(){
+      const deliveryRadio=document.querySelector('input[value="delivery"]');
+      deliveryRadio.checked=false;
+      deliveryRadio.disabled=true;
+      updateModeUI();
+    }
+
+    function enableDeliveryForSunday(){
+      const deliveryRadio=document.querySelector('input[value="delivery"]');
+      deliveryRadio.disabled=false;
     }
 
     function computeTotal(){
@@ -264,40 +270,30 @@
     });
     computeTotal();
 
-    // --- Helpers créneau
     function getChosenSlot(){
-      if (samediSelect.value) return { jour:'samedi', creneau:samediSelect.value };
-      if (dimancheSelect.value) return { jour:'dimanche', creneau:dimancheSelect.value };
-      return { jour:'', creneau:'' };
+      if(samediSelect.value) return {jour:'samedi',creneau:samediSelect.value};
+      if(dimancheSelect.value) return {jour:'dimanche',creneau:dimancheSelect.value};
+      return {jour:'',creneau:''};
     }
 
-    // --- Envoi
     const submitBtn=document.getElementById('submitBtn');
     submitBtn.addEventListener('click',async()=>{
       const mode=document.querySelector('input[name="mode"]:checked')?.value;
-
-      // validations
       const nom=document.getElementById('nom').value.trim();
       const prenom=document.getElementById('prenom').value.trim();
       const phone=document.getElementById('phone').value.trim();
-      const {jour, creneau}=getChosenSlot();
-      const adresse=(mode==='delivery') ? document.getElementById('adresse').value.trim() : "";
+      const {jour,creneau}=getChosenSlot();
+      const adresse=(mode==='delivery')?document.getElementById('adresse').value.trim():"";
 
       if(!nom){alert("merci d’indiquer ton nom");return;}
       if(!prenom){alert("merci d’indiquer ton prénom");return;}
       if(!phone){alert("merci d’indiquer ton numéro de téléphone");return;}
-
-      if(!jour || !creneau){
-        alert("merci de choisir un jour ET un créneau");
-        return;
-      }
+      if(!jour||!creneau){alert("merci de choisir un jour ET un créneau");return;}
 
       if(mode==='delivery'){
-        if(!validateDeliveryThreshold()){
-          alert("la livraison est disponible à partir de 15,00 € de commande (hors frais).");
-          return;
-        }
-        if(!adresse){ alert("merci d’indiquer ton adresse pour la livraison"); return; }
+        if(jour==='samedi'){alert("La livraison n’est pas disponible le samedi.");return;}
+        if(!validateDeliveryThreshold()){alert("livraison disponible à partir de 15,00 € de commande (hors frais).");return;}
+        if(!adresse){alert("merci d’indiquer ton adresse pour la livraison");return;}
       }
 
       const data={
