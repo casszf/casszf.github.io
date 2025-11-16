@@ -15,46 +15,88 @@
     }
     :root{ --bg:#fafafa; --card:#ffffff; --ink:#1f2937; --muted:#6b7280; --ring:#e5e7eb; --brand:#111827; }
     *{box-sizing:border-box}
-    body{ margin:0; font-family:"ArchiveGaramond",serif; font-style:italic; background:var(--bg); color:var(--ink); font-size:18px; line-height:1.5; }
+    body{
+      margin:0;
+      font-family:"ArchiveGaramond",serif;
+      font-style:italic;
+      background:var(--bg);
+      color:var(--ink);
+      font-size:18px;
+      line-height:1.5;
+    }
     .container{max-width:900px; margin:24px auto; padding:0 16px 64px}
     h1{font-size:32px; margin:0 0 6px}
     h2{font-size:20px; margin:20px 0 8px}
     p{margin:6px 0}
-    .card{background:var(--card); border:1px solid var(--ring); border-radius:14px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.05); margin-top:12px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--ring);
+      border-radius:14px;
+      padding:16px;
+      box-shadow:0 1px 2px rgba(0,0,0,.05);
+      margin-top:12px
+    }
 
-    .row{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px dashed #e5e7eb}
+    .row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:10px 0;
+      border-bottom:1px dashed #e5e7eb
+    }
     .row:last-child{border-bottom:none}
     .name{font-weight:600}
     .meta{font-size:14px; color:var(--muted)}
     .muted{color:var(--muted); font-size:14px}
-    .qty{width:64px; padding:8px; border:1px solid var(--ring); border-radius:10px; background:#fff; font-size:16px; text-align:center}
+    .qty{
+      width:64px;
+      padding:8px;
+      border:1px solid var(--ring);
+      border-radius:10px;
+      background:#fff;
+      font-size:16px;
+      text-align:center
+    }
 
     .grid-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px}
     .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
 
     input[type="text"], input[type="tel"], textarea, select{
-      width:100%; padding:10px 12px; border:1px solid var(--ring); border-radius:10px; font-size:16px; background:#fff
+      width:100%;
+      padding:10px 12px;
+      border:1px solid var(--ring);
+      border-radius:10px;
+      font-size:16px;
+      background:#fff
     }
 
-    .choices{display:flex; gap:16px; align-items:center; flex-wrap:wrap}
-    .delivery-extra{display:none; margin-top:8px}
-    .warning{font-size:14px; color:#b91c1c; background:#fee2e2; border:1px solid #fecaca; padding:10px 12px; border-radius:10px; display:none; margin-top:8px}
+    .total{
+      font-size:20px;
+      font-weight:700;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px;
+      border:1px solid var(--ring);
+      border-radius:12px;
+      background:#fff
+    }
 
-    .total{font-size:20px; font-weight:700; display:flex; justify-content:space-between; align-items:center; padding:16px; border:1px solid var(--ring); border-radius:12px; background:#fff}
-
-    .btn{appearance:none; border:none; background:var(--brand); color:#fff; padding:12px 16px; border-radius:12px; font-size:16px; cursor:pointer}
+    .btn{
+      appearance:none;
+      border:none;
+      background:var(--brand);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:12px;
+      font-size:16px;
+      cursor:pointer
+    }
     .btn:disabled{opacity:.5; cursor:not-allowed}
 
-    .disclaimer{font-size:14px; color:#b45309; background:#fff7ed; border:1px solid #fed7aa; padding:10px 12px; border-radius:10px}
     .hidden{display:none !important}
-
     .row div:last-child { text-align:center; }
-
-    /* VISUEL : option de livraison grisée quand indisponible */
-    .choice-disabled {
-      opacity: .4;
-      cursor: not-allowed;
-    }
   </style>
 </head>
 
@@ -85,17 +127,14 @@
     <p class="muted">nous recommandons 2 moitiés par personne 🍽️</p>
     <div class="card" id="bagels"></div>
 
-    <!-- Mode -->
+    <!-- Mode (uniquement click & collect) -->
     <h2>dis-nous comment tu souhaites récupérer ta commande</h2>
     <div class="card">
-      <div class="choices">
-        <label><input type="radio" name="mode" value="collect" checked> click and collect</label>
-        <label id="delivery-label"><input type="radio" name="mode" value="delivery"> livraison</label>
-      </div>
+      <p class="muted">retrait uniquement en click & collect.</p>
 
       <!-- Créneaux -->
       <div class="slots" id="slots">
-        <p class="muted">Choisis un créneau (obligatoire) :</p>
+        <p class="muted">choisis un créneau (obligatoire) :</p>
         <div class="grid-2">
           <div>
             <label class="name">Samedi</label>
@@ -124,15 +163,7 @@
             </select>
           </div>
         </div>
-        <p class="muted">Sélectionne <em>un seul</em> créneau (samedi ou dimanche).</p>
-      </div>
-
-      <!-- Livraison -->
-      <div class="delivery-extra" id="delivery-extra">
-        <p class="disclaimer">Livraison à 4,50€ (disponible uniquement le dimanche).</p>
-        <label class="name" for="adresse">adresse de livraison</label>
-        <textarea id="adresse" rows="2" placeholder="N° et rue, code porte, étage…"></textarea>
-        <div class="warning" id="delivery-warning">La livraison est disponible pour une commande d’au moins 15,00 € (hors frais de livraison).</div>
+        <p class="muted">sélectionne <em>un seul</em> créneau (samedi ou dimanche).</p>
       </div>
     </div>
 
@@ -147,13 +178,12 @@
     </div>
 
     <div class="card hidden" id="confirmation">
-      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande. Si tu as choisi livraison (dimanche uniquement), nous te confirmerons l'heure précise.</p>
+      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande.</p>
     </div>
   </div>
 
   <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoverpl";
-    const DELIVERY_MIN = 15.0;
 
     const BAGELS = [
       {
@@ -202,22 +232,15 @@
       }
     });
 
-    // Créneaux & livraison
+    // Créneaux
     const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
-    const deliveryExtra=document.getElementById('delivery-extra');
-    const deliveryWarning=document.getElementById('delivery-warning');
-    const modeInputs=document.querySelectorAll('input[name="mode"]');
-    const deliveryRadio=document.querySelector('input[value="delivery"]');
-    const deliveryLabel=document.getElementById('delivery-label');
 
     function handleSlotChange(e){
       if(e.target.id==='slot-samedi' && e.target.value!==''){
         dimancheSelect.value='';
-        disableDeliveryForSaturday();
       } else if(e.target.id==='slot-dimanche' && e.target.value!==''){
         samediSelect.value='';
-        enableDeliveryForSunday();
       }
     }
     samediSelect.addEventListener('change',handleSlotChange);
@@ -235,49 +258,13 @@
       return total;
     }
 
-    function deliveryFee(mode){ return mode==='delivery' ? 4.5 : 0; }
-
-    function updateModeUI(){
-      const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      deliveryExtra.style.display = (mode==='delivery') ? 'block' : 'none';
-      validateDeliveryThreshold();
-      computeTotal();
-    }
-    modeInputs.forEach(r=>r.addEventListener('change',updateModeUI));
-    updateModeUI();
-
-    function validateDeliveryThreshold(){
-      const mode=document.querySelector('input[name="mode"]:checked')?.value;
-      const subtotal=getBagelsSubtotal();
-      const blocked=(mode==='delivery' && subtotal<DELIVERY_MIN);
-      deliveryWarning.style.display=blocked?'block':'none';
-      return !blocked;
-    }
-
-    function disableDeliveryForSaturday(){
-      // décocher + désactiver + griser
-      deliveryRadio.checked=false;
-      deliveryRadio.disabled=true;
-      deliveryLabel.classList.add('choice-disabled');
-      updateModeUI();
-    }
-
-    function enableDeliveryForSunday(){
-      // réactiver + enlever le style grisé
-      deliveryRadio.disabled=false;
-      deliveryLabel.classList.remove('choice-disabled');
-    }
-
     function computeTotal(){
-      const mode=document.querySelector('input[name="mode"]:checked')?.value;
       const subtotal=getBagelsSubtotal();
-      const total=subtotal + deliveryFee(mode);
-      document.getElementById('totalAmount').textContent=fmt.format(total);
+      document.getElementById('totalAmount').textContent=fmt.format(subtotal);
     }
 
     document.addEventListener('change',e=>{
-      if(e.target.matches('select.qty')||e.target.matches('input[name="mode"]')){
-        validateDeliveryThreshold();
+      if(e.target.matches('select.qty')){
         computeTotal();
       }
     });
@@ -291,28 +278,24 @@
 
     const submitBtn=document.getElementById('submitBtn');
     submitBtn.addEventListener('click',async()=>{
-      const mode=document.querySelector('input[name="mode"]:checked')?.value;
       const nom=document.getElementById('nom').value.trim();
       const prenom=document.getElementById('prenom').value.trim();
       const phone=document.getElementById('phone').value.trim();
       const {jour,creneau}=getChosenSlot();
-      const adresse=(mode==='delivery')?document.getElementById('adresse').value.trim():"";
 
       if(!nom){alert("merci d’indiquer ton nom");return;}
       if(!prenom){alert("merci d’indiquer ton prénom");return;}
       if(!phone){alert("merci d’indiquer ton numéro de téléphone");return;}
       if(!jour||!creneau){alert("merci de choisir un jour ET un créneau");return;}
 
-      if(mode==='delivery'){
-        if(jour==='samedi'){alert("La livraison n’est pas disponible le samedi.");return;}
-        if(!validateDeliveryThreshold()){alert("livraison disponible à partir de 15,00 € de commande (hors frais).");return;}
-        if(!adresse){alert("merci d’indiquer ton adresse pour la livraison");return;}
-      }
-
       const data={
-        nom, prenom, phone, mode,
-        jour, creneau, creneau_complet:`${jour} ${creneau}`,
-        adresse,
+        nom,
+        prenom,
+        phone,
+        mode:"collect",
+        jour,
+        creneau,
+        creneau_complet:`${jour} ${creneau}`,
         bagels:{},
         total:document.getElementById('totalAmount').textContent,
         _subject:"Nouvelle commande BAGELS AT HOME!",
@@ -320,7 +303,8 @@
       };
 
       document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
-        const q=parseInt(sel.value||'0',10); if(q>0) data.bagels[sel.dataset.key]=q;
+        const q=parseInt(sel.value||'0',10);
+        if(q>0) data.bagels[sel.dataset.key]=q;
       });
 
       try{
