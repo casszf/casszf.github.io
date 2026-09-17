@@ -198,17 +198,20 @@
     bagelsBox.appendChild(headerRow);
 
     BAGELS.forEach(item=>{
-      const row=document.createElement('div');
-      row.className='row';
-      row.innerHTML=`
-        <div>
-          <div class="name">${item.name}</div>
-          ${item.desc ? `<div class="muted">${item.desc}</div>`:''}
-          <div class="meta">${fmt.format(item.half)} la moitié</div>
-        </div>
-        <select class="qty" data-type="bagel" data-key="${item.key}"></select>`;
-      bagelsBox.appendChild(row);
-    });
+  const row=document.createElement('div');
+  row.className='row';
+  const priceLabel = item.unitLabel
+    ? `${fmt.format(item.half)} la ${item.unitLabel}`
+    : `${fmt.format(item.half)}`;
+  row.innerHTML=`
+    <div>
+      <div class="name">${item.name}</div>
+      ${item.desc ? `<div class="muted">${item.desc}</div>`:''}
+      <div class="meta">${priceLabel}</div>
+    </div>
+    <select class="qty" data-type="bagel" data-key="${item.key}"></select>`;
+  bagelsBox.appendChild(row);
+});
 
     document.querySelectorAll('select.qty').forEach(sel=>{
       for(let i=0;i<=20;i++){
