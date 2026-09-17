@@ -71,6 +71,12 @@
       background:#fff
     }
 
+    textarea{
+      resize:vertical;
+      font-family:inherit;
+      font-style:inherit;
+    }
+
     .total{
       font-size:20px;
       font-weight:700;
@@ -149,8 +155,13 @@
             </select>
           </div>
         </div>
-        <p class="muted">sélectionne <em>un seul</em> créneau (samedi ou dimanche).</p>
       </div>
+    </div>
+
+    <!-- Commentaire -->
+    <h2>des précisions à ajouter ?</h2>
+    <div class="card">
+      <textarea id="commentaire" name="commentaire" rows="3" placeholder="allergies, demande particulière, etc. (facultatif)"></textarea>
     </div>
 
     <!-- Total -->
@@ -277,6 +288,7 @@
       const nom=document.getElementById('nom').value.trim();
       const prenom=document.getElementById('prenom').value.trim();
       const phone=document.getElementById('phone').value.trim();
+      const commentaire=document.getElementById('commentaire').value.trim();
       const {jour,creneau}=getChosenSlot();
 
       if(!nom){alert("merci d’indiquer ton nom");return;}
@@ -292,6 +304,7 @@
         jour,
         creneau,
         creneau_complet:`${jour} ${creneau}`,
+        commentaire,
         bagels:{},
         total:document.getElementById('totalAmount').textContent,
         _subject:"Nouvelle commande BAGELS AT HOME!",
