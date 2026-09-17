@@ -137,19 +137,6 @@
         <p class="muted">choisis un créneau (obligatoire) :</p>
         <div class="grid-2">
           <div>
-            <label class="name">Samedi</label>
-            <select id="slot-samedi">
-              <option value="">— choisir —</option>
-              <option>11H30-12H</option>
-              <option>12H-12H30</option>
-              <option>12H30-13H</option>
-              <option>13H-13H30</option>
-              <option>13H30-14H</option>
-              <option>14H-14H30</option>
-              <option>14H30-15H</option>
-            </select>
-          </div>
-          <div>
             <label class="name">Dimanche</label>
             <select id="slot-dimanche">
               <option value="">— choisir —</option>
@@ -159,7 +146,6 @@
               <option>13H-13H30</option>
               <option>13H30-14H</option>
               <option>14H-14H30</option>
-              <option>14H30-15H</option>
             </select>
           </div>
         </div>
@@ -193,10 +179,10 @@
         half:8.0
       },
       {
-        key:'abj',
-        name:'almond butter & jam',
-        desc:`beurre d'amande maison et confiture de saison`,
-        half:5.0
+        key:'cookie au levain',
+        name:'cookie au levain',
+        desc:`avec morceaux de chocolat`,
+        half:3.0
       }
     ];
 
@@ -233,7 +219,6 @@
     });
 
     // Créneaux
-    const samediSelect=document.getElementById('slot-samedi');
     const dimancheSelect=document.getElementById('slot-dimanche');
 
     function handleSlotChange(e){
@@ -243,7 +228,6 @@
         samediSelect.value='';
       }
     }
-    samediSelect.addEventListener('change',handleSlotChange);
     dimancheSelect.addEventListener('change',handleSlotChange);
 
     function getBagelsSubtotal(){
@@ -271,7 +255,6 @@
     computeTotal();
 
     function getChosenSlot(){
-      if(samediSelect.value) return {jour:'samedi',creneau:samediSelect.value};
       if(dimancheSelect.value) return {jour:'dimanche',creneau:dimancheSelect.value};
       return {jour:'',creneau:''};
     }
