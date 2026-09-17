@@ -140,4 +140,187 @@
             <label class="name">Dimanche</label>
             <select id="slot-dimanche">
               <option value="">— choisir —</option>
-              
+              <option>11H30-12H</option>
+              <option>12H-12H30</option>
+              <option>12H30-13H</option>
+              <option>13H-13H30</option>
+              <option>13H30-14H</option>
+              <option>14H-14H30</option>
+            </select>
+          </div>
+        </div>
+        <p class="muted">sélectionne <em>un seul</em> créneau (samedi ou dimanche).</p>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="total" id="totalBox">
+      <span>total</span>
+      <span id="totalAmount">0,00 €</span>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn" id="submitBtn">valider commande</button>
+    </div>
+
+    <div class="card hidden" id="confirmation">
+      <p><strong>commande enregistrée!</strong> tu recevras très rapidement un lien pour régler et confirmer ta commande.</p>
+    </div>
+  </div>
+
+  <script>
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoverpl";
+
+    const BAGELS = [
+      {
+        key:'original',
+        name:'original',
+        desc:`truite fumée de Banka, cream cheese maison, oignons rouges, aneth, huile d'olive, cornichons, poivres Roellinger`,
+        half:8.0,
+        pairHalf:7.0,   // prix par moitié quand elles sont vendues par paire
+        unitLabel:'moitié'
+      },
+      {
+        key:'cookie au levain',
+        name:'cookie au levain',
+        desc:`avec morceaux de chocolat`,
+        half:3.0,
+        unitLabel:null
+      }
+    ];
+
+    const fmt = new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'});
+
+    // --- Construction UI bagels
+    const bagelsBox=document.getElementById('bagels');
+    const headerRow=document.createElement('div');
+    headerRow.className='row';
+    headerRow.style.fontWeight='600';
+    headerRow.style.borderBottom='2px solid #e5e7eb';
+    headerRow.innerHTML=`<div>recette</div><div>nombre de moitiés</div>`;
+    bagelsBox.appendChild(headerRow);
+
+    BAGELS.forEach(item=>{
+      const row=document.createElement('div');
+      row.className='row';
+      const priceLabel = item.unitLabel
+        ? `${fmt.format(item.half)} la ${item.unitLabel}`
+        : `${fmt.format(item.half)}`;
+      row.innerHTML=`
+        <div>
+          <div class="name">${item.name}</div>
+          ${item.desc ? `<div class="muted">${item.desc}</div>`:''}
+          <div class="meta">${priceLabel}</div>
+        </div>
+        <select class="qty" data-type="bagel" data-key="${item.key}"></select>`;
+      bagelsBox.appendChild(row);
+    });
+
+    document.querySelectorAll('select.qty').forEach(sel=>{
+      for(let i=0;i<=20;i++){
+        const opt=document.createElement('option');
+        opt.value=i; opt.textContent=i;
+        sel.appendChild(opt);
+      }
+    });
+
+    // Créneaux
+    const dimancheSelect=document.getElementById('slot-dimanche');
+
+    function handleSlotChange(e){
+      if(e.target.id==='slot-samedi' && e.target.value!==''){
+        dimancheSelect.value='';
+      } else if(e.target.id==='slot-dimanche' && e.target.value!==''){
+        samediSelect.value='';
+      }
+    }
+    dimancheSelect.addEventListener('change',handleSlotChange);
+
+    function getBagelsSubtotal(){
+      let total=0;
+      document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
+        const key=sel.dataset.key;
+        const qty=Number(sel.value||0);
+        const item=BAGELS.find(b=>b.key===key);
+        if(!item) return;
+
+        if(item.pairHalf){
+          const pairs = Math.floor(qty/2);
+          const remainder = qty%2;
+          total += pairs*2*item.pairHalf + remainder*item.half;
+        } else {
+          total += qty*item.half;
+        }
+      });
+      return total;
+    }
+
+    function computeTotal(){
+      const subtotal=getBagelsSubtotal();
+      document.getElementById('totalAmount').textContent=fmt.format(subtotal);
+    }
+
+    document.addEventListener('change',e=>{
+      if(e.target.matches('select.qty')){
+        computeTotal();
+      }
+    });
+    computeTotal();
+
+    function getChosenSlot(){
+      if(dimancheSelect.value) return {jour:'dimanche',creneau:dimancheSelect.value};
+      return {jour:'',creneau:''};
+    }
+
+    const submitBtn=document.getElementById('submitBtn');
+    submitBtn.addEventListener('click',async()=>{
+      const nom=document.getElementById('nom').value.trim();
+      const prenom=document.getElementById('prenom').value.trim();
+      const phone=document.getElementById('phone').value.trim();
+      const {jour,creneau}=getChosenSlot();
+
+      if(!nom){alert("merci d’indiquer ton nom");return;}
+      if(!prenom){alert("merci d’indiquer ton prénom");return;}
+      if(!phone){alert("merci d’indiquer ton numéro de téléphone");return;}
+      if(!jour||!creneau){alert("merci de choisir un jour ET un créneau");return;}
+
+      const data={
+        nom,
+        prenom,
+        phone,
+        mode:"collect",
+        jour,
+        creneau,
+        creneau_complet:`${jour} ${creneau}`,
+        bagels:{},
+        total:document.getElementById('totalAmount').textContent,
+        _subject:"Nouvelle commande BAGELS AT HOME!",
+        _page:location.href
+      };
+
+      document.querySelectorAll('select.qty[data-type="bagel"]').forEach(sel=>{
+        const q=parseInt(sel.value||'0',10);
+        if(q>0) data.bagels[sel.dataset.key]=q;
+      });
+
+      try{
+        const res=await fetch(FORMSPREE_ENDPOINT,{
+          method:"POST",
+          headers:{"Accept":"application/json","Content-Type":"application/json"},
+          body:JSON.stringify(data)
+        });
+        if(res.ok){
+          document.querySelectorAll('.container > *:not(#confirmation)').forEach(el=>el.classList.add('hidden'));
+          const conf=document.getElementById('confirmation');
+          conf.classList.remove('hidden');
+          conf.scrollIntoView({behavior:'smooth'});
+        }else{
+          alert("oops, l’envoi a échoué. réessaie dans un instant");
+        }
+      }catch(e){
+        alert("impossible d’envoyer la commande (connexion ?). réessaie 🙏");
+      }
+    });
+  </script>
+</body>
+</html>
